@@ -4,14 +4,28 @@ import { MaterialIcons } from '@expo/vector-icons';
 
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 
 import Login from './screens/Login';
-import Contacts from './screens/Contacts';
-import Settings from './screens/Settings'
+import ContactsList from './screens/ContactsList';
+import AddContact from './screens/AddContact';
+import SearchContact from './screens/SearchContact';
+import Settings from './screens/Settings';
+import SignUp from './screens/SignUp';
 
 const AppStack = createStackNavigator();
+const ContactsStack = createStackNavigator();
 const Tab = createBottomTabNavigator();
+
+function Contacts() {
+  return (
+    <ContactsStack.Navigator headerMode="none">
+      <ContactsStack.Screen name="ContactsList" component={ContactsList} />
+      <ContactsStack.Screen name="AddContact" component={AddContact} />
+      <ContactsStack.Screen name="SearchContact" component={SearchContact} />
+    </ContactsStack.Navigator>
+  );
+}
 
 function Main() {
   function iconSelector({ route }) {
@@ -35,7 +49,13 @@ function Main() {
   }
   
   return (
-    <Tab.Navigator screenOptions={iconSelector}>
+    <Tab.Navigator
+      screenOptions={iconSelector}
+      tabBarOptions={{
+        activeTintColor: "#12153d",
+        showLabel: false,
+      }}
+    >
       <Tab.Screen name={"Contacts"} component={Contacts} />
       <Tab.Screen name={"Settings"} component={Settings} />
     </Tab.Navigator>
@@ -47,6 +67,7 @@ function Main() {
       <NavigationContainer>
         <AppStack.Navigator headerMode="none">
           <AppStack.Screen name={"Login"} component={Login} />
+          <AppStack.Screen name={"SignUp"} component={SignUp} />
           <AppStack.Screen name={"Main"} component={Main}/>
         </AppStack.Navigator>
       </NavigationContainer>

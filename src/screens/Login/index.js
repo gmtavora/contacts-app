@@ -10,7 +10,7 @@ export default function Login({ navigation }) {
   return (
     <View style={styles.container}>
       <View style={styles.titleArea}>
-        <Text style={styles.title}>Login</Text>
+        <Text style={styles.title}>ContactsApp</Text>
       </View>
       <View style={styles.inputArea}>
         <TextInput
@@ -38,7 +38,7 @@ export default function Login({ navigation }) {
         </TouchableOpacity>
       </View>
       <View style={styles.createAccountArea}>
-        <TouchableOpacity style={styles.createAccountArea}>
+        <TouchableOpacity style={styles.createAccountArea} onPress={() => navigation.navigate("SignUp")}>
           <Text style={styles.dontHaveAnAccount}>Don't have an account?</Text>
           <Text style={styles.signUp}>Sign Up</Text>
         </TouchableOpacity>
