@@ -67,7 +67,7 @@ function splitArray(array) {
 
     return {
       ...acc,
-      [firstLetter]: [...acc[firstLetter] || [], cur]
+      [firstLetter]: [...(acc[firstLetter] || []), cur]
     };
   }, {});
 }
