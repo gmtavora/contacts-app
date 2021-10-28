@@ -8,10 +8,11 @@ module.exports = async (request, response) => {
     return response.status(400).send("Invalid request.");
 
   let userId;
+  let parsedBirthday = birthday.substring(6, 10) + "-" + birthday.substring(3, 5) + "-" + birthday.substring(0, 2);
 
   try {
     userId = await db.registerUser(username, password, name, phone, cell, picture, email, address,
-                                     city, state, country, birthday, company, nationality);
+                                     city, state, country, parsedBirthday, company, nationality);
   } catch (error) {
     console.log(error.message);
     

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { View, Text, TextInput, TouchableOpacity, ActivityIndicator, FlatList } from 'react-native';
+import { View, Text, TextInput, TouchableOpacity, ActivityIndicator, FlatList, useWindowDimensions } from 'react-native';
 
 import { findUserByName, clearSearchError, clearSearchResults } from '../../../redux/actions';
 
@@ -18,6 +18,8 @@ export default function SearchContact({ navigation }) {
   const error = useSelector(state => state.userSearch.error);
   const dispatch = useDispatch();
 
+  const windowHeight = useWindowDimensions().height;
+
   useEffect(() => {
     if (!token) navigation.navigate("Login");
   }, [token]);
@@ -34,7 +36,7 @@ export default function SearchContact({ navigation }) {
   }
 
   return (
-    <View style={commonStyles.container}>
+    <View style={[commonStyles.container, { minHeight: windowHeight }]}>
       <View style={commonStyles.titleContainer}>
         <Text style={commonStyles.title}>Search</Text>
       </View>

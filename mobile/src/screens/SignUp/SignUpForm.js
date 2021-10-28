@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { SafeAreaView, Text, TextInput, TouchableOpacity, Alert } from 'react-native';
-import { KeyboardAvoidingScrollView } from 'react-native-keyboard-avoiding-scroll-view'
+import { KeyboardAvoidingScrollView } from 'react-native-keyboard-avoiding-scroll-view';
+import { TextInputMask } from 'react-native-masked-text';
 
 import { registerUser, clearError } from '../../../redux/actions';
 
@@ -132,25 +133,37 @@ export default function AddContactForm({ navigation }) {
         />
 
         <Text style={commonStyles.inputLabel}>Phone</Text>
-        <TextInput
+        <TextInputMask
+          type="cel-phone"
+          options={{
+            maskType: "BRL",
+            withDDD: true,
+            dddMask: "(99) "
+          }}
+          value={phone}
+          onChangeText={setPhone}
           style={commonStyles.input}
           autoCompleteType="tel"
           maxLength={17}
           keyboardType="numeric"
           textContentType="telephoneNumber"
-          onChangeText={setPhone}
-          value={phone}
         />
 
         <Text style={commonStyles.inputLabel}>Cell</Text>
-        <TextInput
+        <TextInputMask
+          type="cel-phone"
+          options={{
+            maskType: "BRL",
+            withDDD: true,
+            dddMask: "(99) "
+          }}
+          value={cell}
+          onChangeText={setCell}
           style={commonStyles.input}
           autoCompleteType="tel"
           maxLength={17}
           keyboardType="numeric"
           textContentType="telephoneNumber"
-          onChangeText={setCell}
-          value={cell}
         />
 
         <Text style={commonStyles.inputLabel}>Email</Text>
@@ -206,12 +219,16 @@ export default function AddContactForm({ navigation }) {
         />
 
         <Text style={commonStyles.inputLabel}>Birthday</Text>
-        <TextInput
+        <TextInputMask
+          type="datetime"
+          options={{
+            format: "DD/MM/YYYY"
+          }}
+          value={birthday}
+          onChangeText={setBirthday}
           style={commonStyles.input}
           maxLength={10}
           keyboardType="numeric"
-          value={birthday}
-          onChangeText={setBirthday}
         />
 
         <Text style={commonStyles.inputLabel}>Company</Text>

@@ -14,7 +14,7 @@ export default function Login({ navigation }) {
   const error = useSelector(state => state.user.error);
   const dispatch = useDispatch();
 
-  const windowHeight = useWindowDimensions().height
+  const windowHeight = useWindowDimensions().height;
 
   async function login() {
     if (!username) return Alert.alert("Login", "Please inform your username.");

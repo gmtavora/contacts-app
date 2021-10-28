@@ -3,6 +3,9 @@ import { useSelector, useDispatch } from 'react-redux';
 import { ScrollView, View, Text, Image, TouchableOpacity, Alert } from 'react-native';
 import { MaterialIcons, MaterialCommunityIcons } from '@expo/vector-icons';
 
+import moment from 'moment'
+import 'moment/locale/pt-br'
+
 import { addFavorite, removeFavorite, clearError } from '../../../redux/actions';
 
 import styles, { iconColor } from './styles';
@@ -116,7 +119,7 @@ export default function ContactDetails({ route, navigation }) {
             </View>
             <View>
               <Text style={styles.emphasizedTitle}>Birthday</Text>
-              <Text style={styles.emphasizedText}>{contactInfo.birthday}</Text>
+              <Text style={styles.emphasizedText}>{moment(contactInfo.birthday).locale('pt-br').format('D [de] MMMM [de] YYYY')}</Text>
             </View>
           </View>
         </View>
