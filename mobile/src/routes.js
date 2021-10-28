@@ -23,7 +23,7 @@ const Tab = createBottomTabNavigator();
 
 function Friends() {
   return (
-    <ContactsStack.Navigator headerMode="none">
+    <ContactsStack.Navigator screenOptions={{ headerShown: false }}>
       <ContactsStack.Screen name="FriendList" component={FriendsList} />
       <ContactsStack.Screen name="AddFriend" component={AddFriend} />
       <ContactsStack.Screen name="SearchFriend" component={SearchFriend} />
@@ -36,6 +36,9 @@ function Friends() {
 function Main() {
   function iconSelector({ route }) {
     return {
+        headerShown: false,
+        tabBarActiveTintColor: "#12153d",
+        tabBarShowLabel: false,
         tabBarIcon: ({ focused, color, size }) => {
         let iconName;
           
@@ -61,10 +64,6 @@ function Main() {
   return (
     <Tab.Navigator
       screenOptions={iconSelector}
-      tabBarOptions={{
-        activeTintColor: "#12153d",
-        showLabel: false,
-      }}
     >
       <Tab.Screen name={"Friends"} component={Friends} />
       <Tab.Screen name={"Requests"} component={Requests} />
@@ -78,7 +77,7 @@ export default function Routes() {
 
   return (
     <NavigationContainer>
-      <AppStack.Navigator headerMode="none">
+      <AppStack.Navigator screenOptions={{ headerShown: false }}>
         {
           (isLogged)
             ? <AppStack.Screen name={"Main"} component={Main}/>

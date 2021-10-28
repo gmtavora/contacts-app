@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { SafeAreaView, ScrollView, Text, TextInput, TouchableOpacity, Alert } from 'react-native';
+import { SafeAreaView, Text, TextInput, TouchableOpacity, Alert } from 'react-native';
+import { KeyboardAvoidingScrollView } from 'react-native-keyboard-avoiding-scroll-view'
 
 import { registerUser, clearError } from '../../../redux/actions';
 
@@ -82,7 +83,7 @@ export default function AddContactForm({ navigation }) {
 
   return (
     <SafeAreaView style={commonStyles.formContainer}>
-      <ScrollView style={commonStyles.scrollView}>
+      <KeyboardAvoidingScrollView style={commonStyles.scrollView}>
         <Text style={commonStyles.inputLabel}>Username</Text>
         <TextInput
           style={commonStyles.input}
@@ -234,7 +235,7 @@ export default function AddContactForm({ navigation }) {
         <TouchableOpacity style={commonStyles.submitButton} onPress={handleSubmit}>
           <Text style={commonStyles.whiteText}>Enviar</Text>
         </TouchableOpacity>
-      </ScrollView>
+      </KeyboardAvoidingScrollView>
     </SafeAreaView>
   );
 }

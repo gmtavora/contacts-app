@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { View, Text, TextInput, TouchableOpacity, Alert, ActivityIndicator } from 'react-native';
+import { View, Text, TextInput, TouchableOpacity, Alert, ActivityIndicator, useWindowDimensions } from 'react-native';
 
 import { logInUser, clearError } from '../../../redux/actions';
 
@@ -13,6 +13,8 @@ export default function Login({ navigation }) {
   const token = useSelector(state => state.user.token);
   const error = useSelector(state => state.user.error);
   const dispatch = useDispatch();
+
+  const windowHeight = useWindowDimensions().height
 
   async function login() {
     if (!username) return Alert.alert("Login", "Please inform your username.");
@@ -37,7 +39,7 @@ export default function Login({ navigation }) {
   }, [error]);
 
   return (
-    <View style={styles.container}>
+    <View style={[styles.container, { minHeight: windowHeight }]}>
       <View style={styles.titleArea}>
         <Text style={styles.title}>ContactsApp</Text>
       </View>
