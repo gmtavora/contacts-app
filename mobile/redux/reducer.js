@@ -43,7 +43,7 @@ const userReducer = (state = {}, action) => {
     case ERROR_DISPLAYED:
       return {...state, error: undefined};
     case LOG_OUT:
-      return {...state, token: undefined, id: undefined};
+      return {token: undefined, id: undefined};
     case REGISTRATION_REJECTED:
       return {...state, error: action.payload};
     case FRIENDS_LIST_REQUEST_FAILED:
@@ -81,6 +81,8 @@ const contactReducer = (state = [], action) => {
           })
         }
       ))];
+    case LOG_OUT:
+      return [];
     default:
       return state;
   }
@@ -100,6 +102,8 @@ const userSearchReducer = (state = {}, action) => {
       return {...state, error: action.payload};
     case SEARCH_ERROR_DISPLAYED:
       return {...state, error: undefined};
+    case LOG_OUT:
+      return {};
     default:
       return state;
   }
@@ -133,6 +137,8 @@ const requestsReducer = (state = {}, action) => {
       return  {...state, requestRefusalSent: undefined, requestRefusal: action.payload};
     case REQUEST_REFUSAL_ERROR:
       return {...state, requestRefusalSent: undefined, error: action.payload};
+    case LOG_OUT:
+      return {};
     default:
       return state;
   }

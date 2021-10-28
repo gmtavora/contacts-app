@@ -54,10 +54,15 @@ export default function ContactDetails({ route, navigation }) {
 
           <View style={styles.identityContainer}>
             <View style={styles.thumbnail}>
-              <Image
-                style={{aspectRatio: 1, borderRadius: 48}}
-                source={{uri: contactInfo.picture}}
-              />
+              { contactInfo.picture ? <Image
+                                        style={{aspectRatio: 1, borderRadius: 48}}
+                                        source={{uri: contactInfo.picture}}
+                                      />
+                                    : <Image
+                                        style={{aspectRatio: 1, width: 96, height: 96, borderRadius: 48}}
+                                        source={require("../../../assets/anonymous-avatar-icon-25.jpg")}
+                                      />
+              }
             </View>
             <Text style={styles.name}>{contactInfo.name}</Text>
             <Text style={styles.company}>{contactInfo.company}</Text>
