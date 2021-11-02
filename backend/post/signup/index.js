@@ -1,18 +1,19 @@
 const db = require("../../db");
 
 module.exports = async (request, response) => {
-  const {username, password, name, phone, cell, picture, email,
+  const {username, password, name, phone, cell, email,
          address, city, state, country, birthday, company, nationality} = request.body;
 
   if (!username || !password || !email || !phone)
     return response.status(400).send("Invalid request.");
 
-  let userId;
+  let userId, token;
   let parsedBirthday = birthday.substring(6, 10) + "-" + birthday.substring(3, 5) + "-" + birthday.substring(0, 2);
 
   try {
-    userId = await db.registerUser(username, password, name, phone, cell, picture, email, address,
+    userId = await db.registerUser(username, password, name, phone, cell, email, address,
                                      city, state, country, parsedBirthday, company, nationality);
+    token = await db.newToken(userId);
   } catch (error) {
     console.log(error.message);
     
@@ -20,6 +21,6 @@ module.exports = async (request, response) => {
     
     return response.status(403).send(error.message);
   }
-
-  return response.json({token: "AFakeToken", id: userId});
+  
+  return response.json({token: token, id: userId});
 };

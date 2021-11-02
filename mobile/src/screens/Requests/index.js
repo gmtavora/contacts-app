@@ -41,15 +41,13 @@ export default function Requests({ navigation }) {
 
       <View style={commonStyles.formContainer}>
         {
-          (!requestedRequestsList) 
-          ? (results && results.length)
-            ? <FlatList
-                data={results}
-                renderItem={({ item }) => <Row obj={item} navigation={navigation} />}
-                keyExtractor={item => item.id.toString()}
-              />
-            : <Text>You have no requests.</Text>
-          : <ActivityIndicator size="small" color="#000" />
+          (!requestedRequestsList) ? (results && results.length) ? <FlatList
+                                                                     data={results}
+                                                                     renderItem={({ item }) => <Row obj={item} navigation={navigation} />}
+                                                                     keyExtractor={item => item.id.toString()}
+                                                                   />
+                                                                 : <Text>You have no requests.</Text>
+                                   : <ActivityIndicator size="small" color="#000" />
         }
       </View>
     </View>

@@ -5,7 +5,7 @@ module.exports = `CREATE TABLE IF NOT EXISTS Users (
   name text NOT NULL,
   phone text NOT NULL,
   cell text,
-  picture text,
+  avatar text,
   email text NOT NULL UNIQUE,
   address text,
   city text,
@@ -14,6 +14,14 @@ module.exports = `CREATE TABLE IF NOT EXISTS Users (
   birthday date,
   company text,
   nationality text
+);
+
+CREATE TABLE IF NOT EXISTS Tokens (
+  id integer NOT NULL PRIMARY KEY,
+  userId integer NOT NULL UNIQUE,
+  token text NOT NULL UNIQUE,
+  expiration integer NOT NULL,
+  FOREIGN KEY (userId) REFERENCES Users (id)
 );
 
 CREATE TABLE IF NOT EXISTS Friends (

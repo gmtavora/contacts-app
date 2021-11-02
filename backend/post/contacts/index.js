@@ -3,12 +3,14 @@ const db = require("../../db");
 module.exports = async (request, response) => {
   const {token, id} = request.body;
 
-  if (!token) return response.status(403).send("You are not logged in.");
-  if (!id) return response.status(400).send("Missing information");
+  if (!id || !token) return response.status(400).send("Invalid request.");
 
   let contactsList = [];
 
   try {
+    const storedToken = await db.getToken(id);
+    if (storedToken !== token) return response.status(403).send("Invalid credentials");
+    
     contactsList = await db.getFriendsList(id);
   } catch (error) {
     console.log(error.message);

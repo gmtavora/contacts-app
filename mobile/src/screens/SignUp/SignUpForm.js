@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { SafeAreaView, Text, TextInput, TouchableOpacity, Alert } from 'react-native';
+import { SafeAreaView, Text, TextInput, TouchableOpacity, Alert, View, ActivityIndicator } from 'react-native';
 import { KeyboardAvoidingScrollView } from 'react-native-keyboard-avoiding-scroll-view';
 import { TextInputMask } from 'react-native-masked-text';
 
@@ -20,7 +20,6 @@ export default function AddContactForm({ navigation }) {
   const [name, setName] = useState("");
   const [phone, setPhone] = useState("");
   const [cell, setCell] = useState("");
-  const picture = "";
   const [email, setEmail] = useState("");
   const [address, setAddress] = useState("");
   const [city, setCity] = useState("");
@@ -29,6 +28,7 @@ export default function AddContactForm({ navigation }) {
   const [birthday, setBirthday] = useState("");
   const [company, setCompany] = useState("");
   const [nationality, setNationality] = useState("");
+  const [signUpRequested, setSignUpRequested] = useState(false);
 
   useEffect(() => {
     if (token) navigation.navigate("Main");
@@ -38,12 +38,9 @@ export default function AddContactForm({ navigation }) {
     if (error) {
       Alert.alert(windowTitle, error);
       dispatch(clearError());
+      signUpRequested(false);
     }
   }, [error]);
-
-  function handlePhoneNumber(number) {
-    return `(${number.substring(0,2)}) ${number.substring(2,5)}-${number.substring(5,8)}-${number.substring(8)}`;
-  }
 
   async function handleSubmit() {
     if (!username) return Alert.alert(windowTitle, "Please inform an username.");
@@ -62,13 +59,12 @@ export default function AddContactForm({ navigation }) {
 
     if (password !== repeatPassword) return Alert.alert(windowTitle, "Passwords don't match.");
 
-    const userInfo = {
+    const data = {
       username,
       password,
       name,
       phone,
       cell,
-      picture,
       email,
       address,
       city,
@@ -77,9 +73,10 @@ export default function AddContactForm({ navigation }) {
       birthday,
       company,
       nationality
-    };
-
-    dispatch(registerUser(userInfo));
+    }
+    
+    dispatch(registerUser(data));
+    setSignUpRequested(true);
   }
 
   return (
@@ -249,9 +246,13 @@ export default function AddContactForm({ navigation }) {
           onChangeText={setNationality}
         />
 
-        <TouchableOpacity style={commonStyles.submitButton} onPress={handleSubmit}>
-          <Text style={commonStyles.whiteText}>Enviar</Text>
-        </TouchableOpacity>
+        { signUpRequested ? <View style={[commonStyles.submitButton, commonStyles.disabledButton]}>
+                              <ActivityIndicator size="small" color="#000" />
+                            </View>
+                          : <TouchableOpacity style={commonStyles.submitButton} onPress={handleSubmit}>
+                              <Text style={commonStyles.whiteText}>Enviar</Text>
+                            </TouchableOpacity>
+        }
       </KeyboardAvoidingScrollView>
     </SafeAreaView>
   );

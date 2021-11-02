@@ -1,5 +1,5 @@
 module.exports = function getFriendRequests(requested) {
-  const sql = `SELECT Friends.id as requestID, Users.id, Users.name, Users.picture, Users.email, Users.company, lastUserID
+  const sql = `SELECT Friends.id as requestID, Users.id, Users.name, Users.avatar, Users.email, Users.company, lastUserID
                FROM Friends
                INNER JOIN Users
                ON CASE

@@ -25,6 +25,10 @@ export default function Settings({ navigation }) {
       </View>
 
       <View style={commonStyles.formContainer}>
+        <TouchableOpacity style={commonStyles.submitButton} onPress={() => navigation.navigate("ChangeAvatar")}>
+          <Text style={commonStyles.whiteText}>Change avatar</Text>
+        </TouchableOpacity>
+
         <TouchableOpacity style={commonStyles.submitButton} onPress={handleLogout}>
           <Text style={commonStyles.whiteText}>Log Out</Text>
         </TouchableOpacity>

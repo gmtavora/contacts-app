@@ -11,7 +11,8 @@ import Login from './screens/Login';
 import FriendsList from './screens/FriendsList';
 import AddFriend from './screens/AddFriend';
 import SearchFriend from './screens/SearchFriend';
-import Settings from './screens/Settings';
+import SettingsHome from './screens/Settings';
+import ChangeAvatar from './screens/Settings/ChangeAvatarForm';
 import SignUp from './screens/SignUp';
 import FriendDetails from './screens/FriendDetails';
 import UserDetails from './screens/UserDetails';
@@ -19,6 +20,7 @@ import Requests from './screens/Requests';
 
 const AppStack = createStackNavigator();
 const ContactsStack = createStackNavigator();
+const SettingsStack = createStackNavigator();
 const Tab = createBottomTabNavigator();
 
 function Friends() {
@@ -30,6 +32,15 @@ function Friends() {
       <ContactsStack.Screen name="FriendDetails" component={FriendDetails} />
       <ContactsStack.Screen name="UserDetails" component={UserDetails} />
     </ContactsStack.Navigator>
+  );
+}
+
+function Settings() {
+  return (
+    <SettingsStack.Navigator initialRouteName="SettingsHome" screenOptions={{ headerShown: false}}>
+      <SettingsStack.Screen name="SettingsHome" component={SettingsHome} />
+      <SettingsStack.Screen name="ChangeAvatar" component={ChangeAvatar} />
+    </SettingsStack.Navigator>
   );
 }
 

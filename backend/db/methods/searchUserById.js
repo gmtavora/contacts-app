@@ -1,4 +1,4 @@
-module.exports = function searchUserByName(id) {
+module.exports = function searchUserById(id) {
   const sql = `SELECT * FROM Users WHERE id = ?`;
 
   return new Promise((resolve, reject) => {

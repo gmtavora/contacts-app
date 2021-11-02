@@ -2,6 +2,7 @@ const sqlite3 = require("sqlite3").verbose();
 
 const authenticateUser = require("./methods/authenticateUser");
 const registerUser = require("./methods/registerUser");
+const updateInformation = require("./methods/updateInformation");
 const getFriendsList = require("./methods/getFriendsList");
 const getFriendRequests = require("./methods/getFriendRequests");
 const sendFriendRequest = require("./methods/sendFriendRequest");
@@ -13,6 +14,9 @@ const changePassword = require("./methods/changePassword");
 const searchUserById = require("./methods/searchUserById");
 const addFavorite = require("./methods/addFavorite");
 const removeFavorite = require("./methods/removeFavorite");
+const getToken = require("./methods/getToken");
+const newToken = require("./methods/newToken");
+const deleteToken = require("./methods/deleteToken");
 
 class Database {
   constructor(DB_PATH, dbSchema) {
@@ -36,6 +40,7 @@ class Database {
 }
 
 Database.prototype.authenticateUser = authenticateUser;
+Database.prototype.updateInformation = updateInformation;
 Database.prototype.registerUser = registerUser;
 Database.prototype.getFriendsList = getFriendsList;
 Database.prototype.getFriendRequests = getFriendRequests;
@@ -48,6 +53,9 @@ Database.prototype.changePassword = changePassword;
 Database.prototype.searchUserById = searchUserById;
 Database.prototype.addFavorite = addFavorite;
 Database.prototype.removeFavorite = removeFavorite;
+Database.prototype.getToken = getToken;
+Database.prototype.newToken = newToken;
+Database.prototype.deleteToken = deleteToken;
 
 module.exports = Database;
 

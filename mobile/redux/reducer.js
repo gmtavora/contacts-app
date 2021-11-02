@@ -29,7 +29,10 @@ import {
   REQUEST_REFUSAL_ERROR,
   FAVORITE_SETTED,
   FAVORITE_UNSETTED,
-  FAVORITE_ERROR
+  FAVORITE_ERROR,
+  AVATAR_CHANGED,
+  AVATAR_ERROR,
+  CLEAR_AVATAR_RESPONSE
 } from './actions';
 
 const userReducer = (state = {}, action) => {
@@ -50,6 +53,12 @@ const userReducer = (state = {}, action) => {
       return {...state, error: action.payload};
     case FAVORITE_ERROR:
       return {...state, error: action.payload};
+    case AVATAR_CHANGED:
+      return {...state, avatarResponse: action.payload};
+    case AVATAR_ERROR:
+      return {...state, avatarResponse: action.payload};
+    case CLEAR_AVATAR_RESPONSE:
+      return {...state, avatarResponse: undefined};
     default:
       return state;
   }

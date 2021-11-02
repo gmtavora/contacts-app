@@ -52,8 +52,26 @@ export default StyleSheet.create({
     marginTop: 10,
     marginBottom: 10
   },
+  button: {
+    flex: 1,
+    height: 48,
+    alignItems: "center",
+    justifyContent: "center",
+    backgroundColor: blue,
+    marginTop: 10,
+    marginBottom: 10,
+    borderRadius: 10
+  },
+  disabledButton: {
+    backgroundColor: "silver"
+  },
   whiteText: {
     fontWeight: "bold",
     color: "white"
+  },
+  thumbnail: {
+    width: 64,
+    height: 64,
+    borderRadius: 32
   }
 });

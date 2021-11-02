@@ -8,6 +8,7 @@ import sendFriendAcceptance from '../src/network/sendFriendAcceptance';
 import sendFriendRefusal from '../src/network/sendFriendRefusal';
 import setFavorite from '../src/network/setFavorite';
 import unsetFavorite from '../src/network/unsetFavorite';
+import updateAvatar from '../src/network/updateAvatar';
 
 export const UPDATE_USER = "UPDATE_USER";
 export const LOG_IN_SENT = "LOG_IN_SENT";
@@ -43,6 +44,10 @@ export const FAVORITE_SETTED = "FAVORITE_SETTED";
 export const FAVORITE_ERROR = "FAVORITE_ERROR";
 export const UNSET_FAVORITE_SENT = "UNSET_FAVORITE_SENT";
 export const FAVORITE_UNSETTED = "FAVORITE_UNSETTED";
+export const CHANGE_AVATAR = "CHANGE_AVATAR";
+export const AVATAR_CHANGED = "AVATAR_CHANGED";
+export const AVATAR_ERROR = "AVATAR_ERROR";
+export const CLEAR_AVATAR_RESPONSE = "CLEAR_AVATAR_RESPONSE";
 
 export const updateUser = (info) => ({
   action: UPDATE_USER,
@@ -67,6 +72,10 @@ export const clearSearchResults = () => ({
 
 export const clearRequest = () => ({
   type: CLEAR_REQUESTS
+});
+
+export const clearAvatarResponse = () => ({
+  type: CLEAR_AVATAR_RESPONSE
 });
 
 export const logInUser = (username, password) => async dispatch => {
@@ -166,5 +175,15 @@ export const removeFavorite = (token, user, favorite) => async dispatch => {
     dispatch({type: FAVORITE_UNSETTED, payload: favorite});
   } catch (error) {
     dispatch({type: FAVORITE_ERROR, payload: error.message});
+  }
+};
+
+export const changeAvatar = (id, token, data) => async dispatch => {
+  dispatch({type: CHANGE_AVATAR});
+  try {
+    const response = await updateAvatar(id, token, data);
+    dispatch({type: AVATAR_CHANGED, payload: response});
+  } catch (error) {
+    dispatch({type: AVATAR_ERROR, payload: error.message});
   }
 };

@@ -1,5 +1,5 @@
-module.exports = function registerUser(username, password, name, phone, cell, picture, email, address, city, state, country, birthday, company, nationality) { 
-  const sql = `INSERT INTO Users (username, password, name, phone, cell, picture, email, address, city, state, country, birthday, company, nationality)
+module.exports = function registerUser(username, password, name, phone, cell, avatar, email, address, city, state, country, birthday, company, nationality) { 
+  const sql = `INSERT INTO Users (username, password, name, phone, cell, avatar, email, address, city, state, country, birthday, company, nationality)
                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);`;
 
   return new Promise((resolve, reject) => {

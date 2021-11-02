@@ -8,9 +8,12 @@ module.exports = async (request, response) => {
 
   try {
     const userInfo = await db.authenticateUser(username, password);
+    if (!userInfo) return response.status(403).send("Access denied.");
 
-    if (userInfo) return response.json({token: "AFakeToken", id: userInfo.id});
-    else return response.status(403).send("Access denied.");
+    const token = await db.newToken(userInfo.id);
+    if (!token) return response.status(500).send("Internal server error.");
+
+    return response.json({token: token, id: userInfo.id});
   } catch (error) {
     console.log(error.message);
     return response.status(500).send("Internal server error.");
