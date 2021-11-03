@@ -8,8 +8,7 @@ module.exports = async (request, response) => {
   if (!id) return response.status(400).send("Invalid request.");
 
   try {
-    const userSearch = await db.searchUserById(id);
-    const userInfo = userSearch[0];
+    const userInfo = await db.searchUserById(id);
     const storedToken = await db.getToken(id);
 
     if ((!userInfo) || (storedToken !== token)) return response.status(403).send("Invalid credentials.");

@@ -182,7 +182,7 @@ export const changeAvatar = (id, token, data) => async dispatch => {
   dispatch({type: CHANGE_AVATAR});
   try {
     const response = await updateAvatar(id, token, data);
-    dispatch({type: AVATAR_CHANGED, payload: response});
+    dispatch({type: AVATAR_CHANGED, payload: response.data});
   } catch (error) {
     dispatch({type: AVATAR_ERROR, payload: error.message});
   }

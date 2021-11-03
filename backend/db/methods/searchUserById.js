@@ -2,12 +2,12 @@ module.exports = function searchUserById(id) {
   const sql = `SELECT * FROM Users WHERE id = ?`;
 
   return new Promise((resolve, reject) => {
-    function callback(error, rows) {
+    function callback(error, row) {
       if (error) return reject(error);
 
-      resolve(rows);
+      resolve(row);
     }
 
-    this.db.all(sql, [id], callback);
+    this.db.get(sql, [id], callback);
   });
 };

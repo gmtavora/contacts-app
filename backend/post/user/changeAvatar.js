@@ -7,11 +7,10 @@ module.exports = async (request, response) => {
   if (!token) return response.status(403).send("You are not logged in.");
   if (!id || !request.file) return response.status(400).send("Invalid request.");
 
-  const avatar = request.file.filename;
+  const avatar = request.file.filename ? request.file.filename : "";
 
   try {
-    const userSearch = await db.searchUserById(id);
-    const userInfo = userSearch[0];
+    const userInfo = await db.searchUserById(id);
     const storedToken = await db.getToken(id);
 
     if ((!userInfo) || (storedToken !== token)) return response.status(403).send("Invalid credentials.");
@@ -22,5 +21,7 @@ module.exports = async (request, response) => {
     return response.status(500).send("Internal server error.");
   }
 
-  return response.status(200).send("Avatar updated successfully.");
+  const uri = request.file.filename ? ("http://localhost:8000/static/avatars/" + request.file.filename) : "";
+
+  return response.status(200).json({ uri });
 };

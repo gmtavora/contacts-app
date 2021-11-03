@@ -1,4 +1,5 @@
 const db = require("../../db");
+const bcrypt = require("bcrypt");
 
 module.exports = async (request, response) => {
   const {username, password, name, phone, cell, email,
@@ -9,9 +10,11 @@ module.exports = async (request, response) => {
 
   let userId, token;
   let parsedBirthday = birthday.substring(6, 10) + "-" + birthday.substring(3, 5) + "-" + birthday.substring(0, 2);
+  const salt = await bcrypt.genSalt(10);
+  const hashedPassword = await bcrypt.hash(password, salt);
 
   try {
-    userId = await db.registerUser(username, password, name, phone, cell, email, address,
+    userId = await db.registerUser(username, hashedPassword, name, phone, cell, email, address,
                                      city, state, country, parsedBirthday, company, nationality);
     token = await db.newToken(userId);
   } catch (error) {

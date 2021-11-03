@@ -16,6 +16,7 @@ export default function ChangeAvatarForm({ navigation }) {
   const token = useSelector(state => state.user.token);
   const error = useSelector(state => state.user.error);
   const response = useSelector(state => state.user.avatarResponse);
+  const currentAvatar = useSelector(state => state.user.avatar);
 
   const [avatar, setAvatar] = useState();
   const [submitted, setSubmitted] = useState(false);
@@ -25,7 +26,7 @@ export default function ChangeAvatarForm({ navigation }) {
       const { status } = await ImagePicker.requestMediaLibraryPermissionsAsync();
 
       if (status !== "granted") {
-        Alert("Sorry, we need camera roll permission");
+        Alert("Sorry, we need that permission");
       }
     }
   }, []);
@@ -42,12 +43,17 @@ export default function ChangeAvatarForm({ navigation }) {
 
   useEffect(() => {
     if (response) {
-      Alert.alert(windowTitle, "Avatar changed successfully.");
-    } else {
-      Alert.alert(windowTitle, "Avatar not changed.");
-    }
+      if (response.hasOwnProperty("uri")) {
+        setAvatar();
 
-    dispatch(clearAvatarResponse())
+        Alert.alert(windowTitle, "Avatar changed successfully.");
+      } else {
+        Alert.alert(windowTitle, "Avatar not changed.");
+      }
+
+      dispatch(clearAvatarResponse())
+      setSubmitted(false);
+    }
   }, [response]);
 
   async function pickImage() {
@@ -76,6 +82,20 @@ export default function ChangeAvatarForm({ navigation }) {
     setSubmitted(true);
   }
 
+  async function deleteAvatar() {
+    Alert.alert(windowTitle, "Do you want to delete your avatar?", [{
+      text: "Yes",
+      onPress: () => {
+        dispatch(changeAvatar(id, token, {}));
+        setSubmitted(true);
+      }
+    }, {
+      text: "No",
+      onPress: () => {}
+    }
+    ]);
+  }
+
   return (
     <SafeAreaView style={commonStyles.container}>
       <View style={commonStyles.titleContainer}>
@@ -85,14 +105,19 @@ export default function ChangeAvatarForm({ navigation }) {
       <View style={commonStyles.formContainer}>
         <View style={styles.actionContainer}>
           <View style={styles.avatarContainer}>
-            { avatar  ? <Image
-              style={styles.thumbnail}
-              source={{ uri: avatar.uri }}
-              />
-            : <Image
-              style={styles.thumbnail}
-              source={require("../../../assets/anonymous-avatar-icon-25.jpg")}
-              />
+            { (avatar && avatar !== "") ? <Image
+                                            style={styles.thumbnail}
+                                            source={{ uri: avatar.uri }}
+                                          />
+                                        : (currentAvatar  ? <Image
+                                                              style={styles.thumbnail}
+                                                              source={{ uri: currentAvatar }}
+                                                            />
+                                                          : <Image
+                                                              style={styles.thumbnail}
+                                                              source={require("../../../assets/anonymous-avatar-icon-25.jpg")}
+                                                            />
+                                          )
             }
           </View>
 
@@ -100,7 +125,7 @@ export default function ChangeAvatarForm({ navigation }) {
             <TouchableOpacity onPress={pickImage} style={[commonStyles.button, styles.actionButton]}>
               <FontAwesome name="image" size={24} color="white" />
             </TouchableOpacity>
-            <TouchableOpacity onPress={() => setAvatar()} style={[commonStyles.button, styles.actionButton]}>
+            <TouchableOpacity onPress={deleteAvatar} style={[commonStyles.button, styles.actionButton]}>
               <FontAwesome name="sticky-note-o" size={24} color="white" />
             </TouchableOpacity>
           </View>

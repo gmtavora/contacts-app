@@ -40,13 +40,13 @@ const userReducer = (state = {}, action) => {
     case UPDATE_USER:
       return {...state, ...action.payload};
     case LOG_IN_FULFILLED:
-      return {...state, token: action.payload.token, id: action.payload.id};
+      return {...state, ...action.payload};
     case LOG_IN_REJECTED:
       return {...state, error: action.payload};
     case ERROR_DISPLAYED:
       return {...state, error: undefined};
     case LOG_OUT:
-      return {token: undefined, id: undefined};
+      return {};
     case REGISTRATION_REJECTED:
       return {...state, error: action.payload};
     case FRIENDS_LIST_REQUEST_FAILED:
@@ -54,7 +54,7 @@ const userReducer = (state = {}, action) => {
     case FAVORITE_ERROR:
       return {...state, error: action.payload};
     case AVATAR_CHANGED:
-      return {...state, avatarResponse: action.payload};
+      return {...state, avatarResponse: action.payload, avatar: action.payload.uri};
     case AVATAR_ERROR:
       return {...state, avatarResponse: action.payload};
     case CLEAR_AVATAR_RESPONSE:

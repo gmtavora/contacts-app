@@ -13,6 +13,7 @@ import AddFriend from './screens/AddFriend';
 import SearchFriend from './screens/SearchFriend';
 import SettingsHome from './screens/Settings';
 import ChangeAvatar from './screens/Settings/ChangeAvatarForm';
+import ChangeInformations from './screens/Settings/ChangeInformations';
 import SignUp from './screens/SignUp';
 import FriendDetails from './screens/FriendDetails';
 import UserDetails from './screens/UserDetails';
@@ -40,6 +41,7 @@ function Settings() {
     <SettingsStack.Navigator initialRouteName="SettingsHome" screenOptions={{ headerShown: false}}>
       <SettingsStack.Screen name="SettingsHome" component={SettingsHome} />
       <SettingsStack.Screen name="ChangeAvatar" component={ChangeAvatar} />
+      <SettingsStack.Screen name="ChangeInformations" component={ChangeInformations} />
     </SettingsStack.Navigator>
   );
 }

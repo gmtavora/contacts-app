@@ -22,7 +22,7 @@ const multerConfig = {
   dest: path.resolve(__dirname, 'uploads', 'avatars'),
   storage: multer.diskStorage({
     destination: (req, file, cb) => {
-      cb(null, path.resolve(__dirname, 'uploads', 'avatars'));
+      cb(null, path.resolve(__dirname, "uploads", "avatars"));
     },
     filename: (req, file, cb) => {
       crypto.randomBytes(16, (err, hash) => {
@@ -76,6 +76,8 @@ app.post("/request/accept", requestAccept);
 app.post("/request/refuse", requestRefuse);
 app.post("/favorites/add", addFavorite);
 app.post("/favorites/remove", removeFavorite);
+
+app.use("/static/avatars/", express.static(__dirname + "/uploads/avatars"));
 
 app.use((request, response, next) => {
   const error = new Error("Not found.");
