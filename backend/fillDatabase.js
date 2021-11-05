@@ -74,7 +74,9 @@ async function fetchContacts(total) {
 
   formatted.forEach(async (user) => {
     try {
-          await db.registerUser(user.username, user.password, user.name, user.phone, user.cell, user.picture, user.email, user.address.street, user.address.city, user.address.state, user.address.country, user.birth.date, user.company, user.nat);
+          const idReceived = await db.registerUser(user.username, user.password, user.name, user.phone, user.cell, user.email, user.address.street, user.address.city, user.address.state, user.address.country, user.birth.date, user.company, user.nat);
+          await db.updateInformation(idReceived, "avatar", user.picture);
+
           console.log(`Inserted new user with name: ${user.name}`);
         } catch (error) {
           console.log(error.message);

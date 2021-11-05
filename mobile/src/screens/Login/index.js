@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { View, Text, TextInput, TouchableOpacity, Alert, ActivityIndicator, useWindowDimensions } from 'react-native';
+import { View, Text, TextInput, TouchableOpacity, Alert, ActivityIndicator, SafeAreaView, useWindowDimensions } from 'react-native';
+import { KeyboardAvoidingScrollView } from 'react-native-keyboard-avoiding-scroll-view';
 
 import { logInUser, clearError } from '../../../redux/actions';
 
@@ -39,47 +40,49 @@ export default function Login({ navigation }) {
   }, [error]);
 
   return (
-    <View style={[styles.container, { minHeight: windowHeight }]}>
-      <View style={styles.titleArea}>
-        <Text style={styles.title}>ContactsApp</Text>
-      </View>
-      <View style={styles.inputArea}>
-        <TextInput
-          style={styles.input} 
-          value={username}
-          placeholder="Username"
-          placeholderTextColor="#FFF"
-          onChangeText={setUsername}
-          maxLength={32}
-          autoCapitalize="none"
-        />
-        <TextInput
-          style={styles.input}
-          value={password}
-          placeholder="Password"
-          placeholderTextColor="#FFF"
-          onChangeText={setPassword}
-          maxLength={32}
-          autoCapitalize="none"
-          secureTextEntry
-        />
-        {(!loginRequested) ? <TouchableOpacity
-                              style={styles.logIn}
-                              onPress={login}
-                            >
-                              <Text style={styles.logInText}>Log In</Text>
-                            </TouchableOpacity>
-                          : <View style={[styles.logIn, styles.disabledLogin]}>
-                              <ActivityIndicator size="small" color="#000" />
-                            </View>
-        }
-      </View>
-      <View style={styles.createAccountArea}>
-        <TouchableOpacity style={styles.createAccountArea} onPress={() => navigation.navigate("SignUp")}>
-          <Text style={styles.dontHaveAnAccount}>Don't have an account?</Text>
-          <Text style={styles.signUp}>Sign Up</Text>
-        </TouchableOpacity>
-      </View>
-    </View>
+    <SafeAreaView style={styles.container}>
+      <KeyboardAvoidingScrollView contentContainerStyle={styles.scrollView}>
+        <View style={styles.titleArea}>
+          <Text style={styles.title}>ContactsApp</Text>
+        </View>
+        <View style={styles.inputArea}>
+          <TextInput
+            style={styles.input} 
+            value={username}
+            placeholder="Username"
+            placeholderTextColor="#FFF"
+            onChangeText={setUsername}
+            maxLength={32}
+            autoCapitalize="none"
+          />
+          <TextInput
+            style={styles.input}
+            value={password}
+            placeholder="Password"
+            placeholderTextColor="#FFF"
+            onChangeText={setPassword}
+            maxLength={32}
+            autoCapitalize="none"
+            secureTextEntry
+          />
+          {(!loginRequested) ? <TouchableOpacity
+                                style={styles.logIn}
+                                onPress={login}
+                              >
+                                <Text style={styles.logInText}>Log In</Text>
+                              </TouchableOpacity>
+                            : <View style={[styles.logIn, styles.disabledLogin]}>
+                                <ActivityIndicator size="small" color="#000" />
+                              </View>
+          }
+        </View>
+        <View style={styles.createAccountArea}>
+          <TouchableOpacity style={styles.createAccountArea} onPress={() => navigation.navigate("SignUp")}>
+            <Text style={styles.dontHaveAnAccount}>Don't have an account?</Text>
+            <Text style={styles.signUp}>Sign Up</Text>
+          </TouchableOpacity>
+        </View>
+      </KeyboardAvoidingScrollView>
+    </SafeAreaView>
   );
 };

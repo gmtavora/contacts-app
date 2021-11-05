@@ -32,7 +32,14 @@ import {
   FAVORITE_ERROR,
   AVATAR_CHANGED,
   AVATAR_ERROR,
-  CLEAR_AVATAR_RESPONSE
+  CLEAR_AVATAR_RESPONSE,
+  USER_INFO_CHANGED,
+  CHANGE_USER_INFO_ERROR,
+  CLEAR_USER_INFO_CHANGE_ERROR,
+  CLEAR_USER_INFO_CHANGE_RESPONSE,
+  PASSWORD_CHANGED,
+  PASSWORD_CHANGE_ERROR,
+  CLEAR_PASSWORD_RESPONSE
 } from './actions';
 
 const userReducer = (state = {}, action) => {
@@ -59,6 +66,20 @@ const userReducer = (state = {}, action) => {
       return {...state, avatarResponse: action.payload};
     case CLEAR_AVATAR_RESPONSE:
       return {...state, avatarResponse: undefined};
+    case USER_INFO_CHANGED:
+      return {...state, ...action.payload, changeInfoResponse: true};
+    case CHANGE_USER_INFO_ERROR:
+      return {...state, error: action.payload};
+    case CLEAR_USER_INFO_CHANGE_ERROR:
+      return {...state, error: undefined};
+    case CLEAR_USER_INFO_CHANGE_RESPONSE:
+      return {...state, changeInfoResponse: undefined};
+    case PASSWORD_CHANGED:
+      return {...state, passwordResponse: action.payload};
+    case PASSWORD_CHANGE_ERROR:
+      return {...state, error: action.payload};
+    case CLEAR_PASSWORD_RESPONSE:
+      return {...state, passwordResponse: undefined};
     default:
       return state;
   }

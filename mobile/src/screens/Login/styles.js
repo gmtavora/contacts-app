@@ -6,6 +6,10 @@ export default StyleSheet.create({
     flex: 1,
     backgroundColor: "#5F94E3"
   },
+  scrollView: {
+    flex: 1,
+    justifyContent: "space-around"
+  },
   titleArea: {
     flex: 1,
     alignItems: "center",

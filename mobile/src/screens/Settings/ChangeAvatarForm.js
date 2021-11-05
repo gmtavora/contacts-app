@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { FontAwesome } from '@expo/vector-icons';
 import * as ImagePicker from 'expo-image-picker';
 
-import { changeAvatar, clearAvatarResponse } from '../../../redux/actions';
+import { changeAvatar, clearAvatarResponse, clearError } from '../../../redux/actions';
 
 import commonStyles from '../commonStyles';
 import styles from './styles';
@@ -38,6 +38,8 @@ export default function ChangeAvatarForm({ navigation }) {
   useEffect(() => {
     if (error) {
       Alert.alert(windowTitle, error);
+      dispatch(clearError());
+      setSubmitted(false);
     }
   }, [error]);
 

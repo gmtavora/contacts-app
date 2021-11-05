@@ -17,7 +17,9 @@ module.exports = async (request, response) => {
     const token = await db.newToken(userInfo.id);
     if (!token) return response.status(500).send("Internal server error.");
 
-    return response.json({token: token, id: userInfo.id, avatar: "http://localhost:8000/static/avatars/" + userInfo.avatar});
+    delete userInfo.password;
+
+    return response.json({token: token, ...userInfo, avatar: "http://192.168.1.68:8000/static/avatars/" + userInfo.avatar});
   } catch (error) {
     console.log(error.message);
     return response.status(500).send("Internal server error.");

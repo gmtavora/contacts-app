@@ -38,7 +38,7 @@ export default function AddContactForm({ navigation }) {
     if (error) {
       Alert.alert(windowTitle, error);
       dispatch(clearError());
-      signUpRequested(false);
+      setSignUpRequested(false);
     }
   }, [error]);
 

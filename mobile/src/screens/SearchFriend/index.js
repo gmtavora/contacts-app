@@ -11,6 +11,7 @@ export default function SearchFriend({ navigation }) {
   const [name, setName] = useState("");
   const [submitable, setSubmitable] = useState(false);
   const [results, setResults] = useState([]);
+  const [requested, setRequested] = useState(false);
 
   const token = useSelector(state => state.user.token);
   const contacts = useSelector(state => state.contacts);
@@ -27,6 +28,8 @@ export default function SearchFriend({ navigation }) {
   }, [name]);
 
   function search() {
+    setRequested(true);
+    
     if (contacts) {
       let aux = [];
 
@@ -64,12 +67,12 @@ export default function SearchFriend({ navigation }) {
 
       <View style={styles.resultsContainer}>
         {
-          (results && results.length) ? <FlatList
+          (requested && results.length) ? <FlatList
                                           data={results}
                                           renderItem={({ item }) => <Row obj={item} navigation={navigation} />}
                                           keyExtractor={item => item.id.toString()}
                                         />
-                                      : (results && !results.length)
+                                      : (requested && !results.length)
                                         ? <Text>No contacts found.</Text>
                                         : null
         }

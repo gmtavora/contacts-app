@@ -24,6 +24,23 @@ module.exports = async (request, response) => {
     
     return response.status(403).send(error.message);
   }
+
+  const userInfo = {
+    id: userId,
+    token,
+    username,
+    name,
+    phone,
+    cell,
+    email,
+    address,
+    city,
+    state,
+    country,
+    parsedBirthday,
+    company,
+    nationality
+  };
   
-  return response.json({token: token, id: userId});
+  return response.json(userInfo);
 };

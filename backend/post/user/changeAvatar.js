@@ -21,7 +21,7 @@ module.exports = async (request, response) => {
     return response.status(500).send("Internal server error.");
   }
 
-  const uri = request.file.filename ? ("http://localhost:8000/static/avatars/" + request.file.filename) : "";
+  const uri = request.file.filename ? ("http://192.168.1.68:8000/static/avatars/" + request.file.filename) : "";
 
   return response.status(200).json({ uri });
 };

@@ -9,6 +9,8 @@ import sendFriendRefusal from '../src/network/sendFriendRefusal';
 import setFavorite from '../src/network/setFavorite';
 import unsetFavorite from '../src/network/unsetFavorite';
 import updateAvatar from '../src/network/updateAvatar';
+import updateInformations from '../src/network/updateInformations';
+import changeUserPassword from '../src/network/changeUserPassword';
 
 export const UPDATE_USER = "UPDATE_USER";
 export const LOG_IN_SENT = "LOG_IN_SENT";
@@ -48,6 +50,16 @@ export const CHANGE_AVATAR = "CHANGE_AVATAR";
 export const AVATAR_CHANGED = "AVATAR_CHANGED";
 export const AVATAR_ERROR = "AVATAR_ERROR";
 export const CLEAR_AVATAR_RESPONSE = "CLEAR_AVATAR_RESPONSE";
+export const CHANGE_USER_INFO = "CHANGE_USER_INFO";
+export const USER_INFO_CHANGED = "USER_INFO_CHANGED";
+export const CHANGE_USER_INFO_ERROR = "CHANGE_USER_INFO_ERROR";
+export const CLEAR_USER_INFO_CHANGE_ERROR = "CLEAR_USER_INFO_CHANGE_ERROR";
+export const CLEAR_USER_INFO_CHANGE_RESPONSE = "CLEAR_USER_INFO_CHANGE_RESPONSE";
+export const CHANGE_PASSWORD = "CHANGE_USER_PASSWORD";
+export const PASSWORD_CHANGED = "PASSWORD_CHANGED";
+export const PASSWORD_CHANGE_ERROR = "PASSWORD_CHANGE_ERROR";
+export const CLEAR_PASSWORD_CHANGE_ERROR = "CLEAR_PASSWORD_CHANGE_ERROR";
+export const CLEAR_PASSWORD_RESPONSE = "CLEAR_PASSWORD_RESPONSE";
 
 export const updateUser = (info) => ({
   action: UPDATE_USER,
@@ -78,11 +90,19 @@ export const clearAvatarResponse = () => ({
   type: CLEAR_AVATAR_RESPONSE
 });
 
+export const clearUserInfoChangeResponse = () => ({
+  type: CLEAR_USER_INFO_CHANGE_RESPONSE
+});
+
+export const clearPasswordResponse = () => ({
+  type: CLEAR_PASSWORD_RESPONSE
+});
+
 export const logInUser = (username, password) => async dispatch => {
   dispatch({type: LOG_IN_SENT});
   try {
-    const {token, id} = await login(username, password);
-    dispatch({type: LOG_IN_FULFILLED, payload: {token, id}});
+    const userInfo = await login(username, password);
+    dispatch({type: LOG_IN_FULFILLED, payload: userInfo});
   } catch (error) {
     dispatch({type: LOG_IN_REJECTED, payload: error.message});
   }
@@ -91,8 +111,8 @@ export const logInUser = (username, password) => async dispatch => {
 export const registerUser = (userInfo) => async dispatch => {
   dispatch({type: REGISTER_USER});
   try {
-    const {token, id} = await registerNewUser(userInfo);
-    dispatch({type: LOG_IN_FULFILLED, payload: {token, id}});
+    const userInfo = await registerNewUser(userInfo);
+    dispatch({type: LOG_IN_FULFILLED, payload: userInfo});
   } catch (error) {
     dispatch({type: REGISTRATION_REJECTED, payload: error.message});
   }
@@ -185,5 +205,25 @@ export const changeAvatar = (id, token, data) => async dispatch => {
     dispatch({type: AVATAR_CHANGED, payload: response.data});
   } catch (error) {
     dispatch({type: AVATAR_ERROR, payload: error.message});
+  }
+};
+
+export const changeUserInfo = (data) => async dispatch => {
+  dispatch({type: CHANGE_USER_INFO});
+  try {
+    const response = await updateInformations(data);
+    dispatch({type: USER_INFO_CHANGED, payload: response.data});
+  } catch (error) {
+    dispatch({type: CHANGE_USER_INFO_ERROR, payload: error.message});
+  }
+};
+
+export const changePassword = (data) => async dispatch => {
+  dispatch({type: CHANGE_PASSWORD});
+  try {
+    const response = await changeUserPassword(data);
+    dispatch({type: PASSWORD_CHANGED, payload: response.data});
+  } catch (error) {
+    dispatch({type: PASSWORD_CHANGE_ERROR, payload: error.message})
   }
 };

@@ -5,6 +5,7 @@ import { View, Text, TouchableOpacity } from 'react-native';
 import { logOutUser } from '../../../redux/actions';
 
 import commonStyles from '../commonStyles';
+import styles from './styles';
 
 export default function Settings({ navigation }) {
   const dispatch = useDispatch();
@@ -25,15 +26,19 @@ export default function Settings({ navigation }) {
       </View>
 
       <View style={commonStyles.formContainer}>
-        <TouchableOpacity style={commonStyles.submitButton} onPress={() => navigation.navigate("ChangeAvatar")}>
+        <TouchableOpacity style={[styles.menuButton, styles.menuButtonTop]} onPress={() => navigation.navigate("ChangeAvatar")}>
           <Text style={commonStyles.whiteText}>Change avatar</Text>
         </TouchableOpacity>
 
-        <TouchableOpacity style={commonStyles.submitButton} onPress={() => navigation.navigate("ChangeInformations")}>
+        <TouchableOpacity style={styles.menuButton} onPress={() => navigation.navigate("ChangePassword")}>
+          <Text style={commonStyles.whiteText}>Change password</Text>
+        </TouchableOpacity>
+
+        <TouchableOpacity style={styles.menuButton} onPress={() => navigation.navigate("ChangeInformations")}>
           <Text style={commonStyles.whiteText}>Update Informations</Text>
         </TouchableOpacity>
 
-        <TouchableOpacity style={commonStyles.submitButton} onPress={handleLogout}>
+        <TouchableOpacity style={[styles.menuButton, styles.menuButtonBottom]} onPress={handleLogout}>
           <Text style={commonStyles.whiteText}>Log Out</Text>
         </TouchableOpacity>
       </View>
