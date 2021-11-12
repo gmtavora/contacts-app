@@ -54,9 +54,9 @@ export default function ContactDetails({ route, navigation }) {
 
           <View style={styles.identityContainer}>
             <View style={styles.thumbnail}>
-              { contactInfo.picture ? <Image
+              { contactInfo.avatar ? <Image
                                         style={{aspectRatio: 1, borderRadius: 48}}
-                                        source={{uri: contactInfo.picture}}
+                                        source={{uri: contactInfo.avatar}}
                                       />
                                     : <Image
                                         style={{aspectRatio: 1, width: 96, height: 96, borderRadius: 48}}

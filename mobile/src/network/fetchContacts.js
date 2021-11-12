@@ -1,4 +1,4 @@
-import { host } from "./constants";
+import { HOST, PORT } from "@env";
 
 function splitArray(array) {
   return array.reduce((acc, cur) => {
@@ -28,7 +28,7 @@ function sections(array) {
 }
 
 export default async function fetchContacts(token, id) {
-  const response = await fetch(`${host}/contacts`, {
+  const response = await fetch(`${HOST}:${PORT}/contacts`, {
     method: 'POST',
     headers: {'content-type': 'application/json'},
     body: JSON.stringify({token, id})

@@ -1,10 +1,10 @@
-import { host } from './constants';
+import { HOST, PORT } from '@env';
 
-export default async function searchForUser(token, word) {
-  const response = await fetch(`${host}/contacts/search`, {
+export default async function searchForUser(id, token, word) {
+  const response = await fetch(`${HOST}:${PORT}/contacts/search`, {
     method: "POST",
     headers: {"content-type": "application/json"},
-    body: JSON.stringify({token, word})
+    body: JSON.stringify({id, token, word})
   });
 
   if (response.ok) {

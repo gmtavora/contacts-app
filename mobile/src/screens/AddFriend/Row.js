@@ -12,7 +12,7 @@ export default class Row extends React.PureComponent {
           <View style={styles.thumbnail}>
             <Image
               style={styles.profilePicture}
-              source={{uri: this.props.obj.picture}}
+              source={{uri: this.props.obj.avatar}}
             />
           </View>
           <View style={styles.contactInfo}>

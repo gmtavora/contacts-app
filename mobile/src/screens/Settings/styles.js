@@ -47,5 +47,8 @@ export default StyleSheet.create({
   menuButtonBottom: {
     borderBottomStartRadius: 10,
     borderBottomEndRadius: 10
+  },
+  helpText: {
+    marginBottom: 20
   }
 });

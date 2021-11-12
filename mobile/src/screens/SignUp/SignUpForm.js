@@ -19,15 +19,8 @@ export default function AddContactForm({ navigation }) {
   const [repeatPassword, setRepeatPassword] = useState("");
   const [name, setName] = useState("");
   const [phone, setPhone] = useState("");
-  const [cell, setCell] = useState("");
   const [email, setEmail] = useState("");
-  const [address, setAddress] = useState("");
-  const [city, setCity] = useState("");
-  const [state, setState] = useState("");
-  const [country, setCountry] = useState("");
-  const [birthday, setBirthday] = useState("");
   const [company, setCompany] = useState("");
-  const [nationality, setNationality] = useState("");
   const [signUpRequested, setSignUpRequested] = useState(false);
 
   useEffect(() => {
@@ -64,15 +57,8 @@ export default function AddContactForm({ navigation }) {
       password,
       name,
       phone,
-      cell,
       email,
-      address,
-      city,
-      state,
-      country,
-      birthday,
       company,
-      nationality
     }
     
     dispatch(registerUser(data));
@@ -146,23 +132,6 @@ export default function AddContactForm({ navigation }) {
           textContentType="telephoneNumber"
         />
 
-        <Text style={commonStyles.inputLabel}>Cell</Text>
-        <TextInputMask
-          type="cel-phone"
-          options={{
-            maskType: "BRL",
-            withDDD: true,
-            dddMask: "(99) "
-          }}
-          value={cell}
-          onChangeText={setCell}
-          style={commonStyles.input}
-          autoCompleteType="tel"
-          maxLength={17}
-          keyboardType="numeric"
-          textContentType="telephoneNumber"
-        />
-
         <Text style={commonStyles.inputLabel}>Email</Text>
         <TextInput
           style={commonStyles.input}
@@ -174,60 +143,6 @@ export default function AddContactForm({ navigation }) {
           onChangeText={setEmail}
         />
 
-        <Text style={commonStyles.inputLabel}>Address</Text>
-        <TextInput
-          style={commonStyles.input}
-          autoCapitalize="words"
-          autoCompleteType="street-address"
-          maxLength={64}
-          textContentType="streetAddressLine1"
-          value={address}
-          onChangeText={setAddress}
-        />
-
-        <Text style={commonStyles.inputLabel}>City</Text>
-        <TextInput
-          style={commonStyles.input}
-          autoCapitalize="words"
-          maxLength={32}
-          textContentType="addressCity"
-          value={city}
-          onChangeText={setCity}
-        />
-
-        <Text style={commonStyles.inputLabel}>State</Text>
-        <TextInput
-          style={commonStyles.input}
-          autoCapitalize="words"
-          maxLength={32}
-          textContentType="addressState"
-          value={state}
-          onChangeText={setState}
-        />
-
-        <Text style={commonStyles.inputLabel}>Country</Text>
-        <TextInput
-          style={commonStyles.input}
-          autoCapitalize="words"
-          maxLength={32}
-          textContentType="countryName"
-          value={country}
-          onChangeText={setCountry}
-        />
-
-        <Text style={commonStyles.inputLabel}>Birthday</Text>
-        <TextInputMask
-          type="datetime"
-          options={{
-            format: "DD/MM/YYYY"
-          }}
-          value={birthday}
-          onChangeText={setBirthday}
-          style={commonStyles.input}
-          maxLength={10}
-          keyboardType="numeric"
-        />
-
         <Text style={commonStyles.inputLabel}>Company</Text>
         <TextInput
           style={commonStyles.input}
@@ -236,14 +151,6 @@ export default function AddContactForm({ navigation }) {
           textContentType="organizationName"
           value={company}
           onChangeText={setCompany}
-        />
-
-        <Text style={commonStyles.inputLabel}>Nationality</Text>
-        <TextInput
-          style={commonStyles.input}
-          maxLength={32}
-          value={nationality}
-          onChangeText={setNationality}
         />
 
         { signUpRequested ? <View style={[commonStyles.submitButton, commonStyles.disabledButton]}>

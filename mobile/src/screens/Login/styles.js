@@ -46,6 +46,10 @@ export default StyleSheet.create({
   logInText: {
     color: "#FFF"
   },
+  forgotPasswordText: {
+    marginTop: 5,
+    color: "#FFF"
+  },
   disabledLogin: {
     backgroundColor: "silver"
   },

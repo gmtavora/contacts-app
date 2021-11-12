@@ -12,6 +12,7 @@ import styles from './styles';
 export default function SearchContact({ navigation }) {
   const [name, setName] = useState("");
   const [submitable, setSubmitable] = useState(false);
+  const id = useSelector(state => state.user.id);
   const token = useSelector(state => state.user.token);
   const searchRequested = useSelector(state => state.userSearch.requested);
   const results = useSelector(state => state.userSearch.result);
@@ -32,7 +33,7 @@ export default function SearchContact({ navigation }) {
   function requestSearch() {
     dispatch(clearSearchError());
     dispatch(clearSearchResults());
-    dispatch(findUserByName(token, name));
+    dispatch(findUserByName(id, token, name));
   }
 
   return (

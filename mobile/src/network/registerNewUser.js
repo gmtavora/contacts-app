@@ -1,7 +1,7 @@
-import { host } from './constants';
+import { HOST, PORT } from '@env';
 
 export default async function registerNewUser(userInfo) {
-  const response = await fetch(`${host}/signup`, {
+  const response = await fetch(`${HOST}:${PORT}/signup`, {
     method: "POST",
     headers: {"content-type": "application/json"},
     body: JSON.stringify(userInfo)

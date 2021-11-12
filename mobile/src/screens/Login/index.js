@@ -75,6 +75,9 @@ export default function Login({ navigation }) {
                                 <ActivityIndicator size="small" color="#000" />
                               </View>
           }
+          <TouchableOpacity onPress={() => navigation.navigate("ForgotPassword")}>
+            <Text style={styles.forgotPasswordText}>Forgot your password?</Text>
+          </TouchableOpacity>
         </View>
         <View style={styles.createAccountArea}>
           <TouchableOpacity style={styles.createAccountArea} onPress={() => navigation.navigate("SignUp")}>

@@ -1,7 +1,7 @@
-import { host } from './constants';
+import { HOST, PORT } from '@env';
 
 export default async function updateInformations(formdata) {
-  const response = await fetch(`${host}/user/updateInformations`, {
+  const response = await fetch(`${HOST}:${PORT}/user/updateInformations`, {
     method: "POST",
     headers: {"content-type": "application/json"},
     body: JSON.stringify(formdata)

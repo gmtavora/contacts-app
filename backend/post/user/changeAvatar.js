@@ -4,10 +4,9 @@ module.exports = async (request, response) => {
   const token = request.get("token");
   const id = request.get("id");
 
-  if (!token) return response.status(403).send("You are not logged in.");
-  if (!id || !request.file) return response.status(400).send("Invalid request.");
+  if (!token || !id) return response.status(403).send("You are not logged in.");
 
-  const avatar = request.file.filename ? request.file.filename : "";
+  const avatar = request.file.filename ? request.file.filename : null;
 
   try {
     const userInfo = await db.searchUserById(id);
@@ -21,7 +20,7 @@ module.exports = async (request, response) => {
     return response.status(500).send("Internal server error.");
   }
 
-  const uri = request.file.filename ? ("http://192.168.1.68:8000/static/avatars/" + request.file.filename) : "";
+  const uri = request.file.filename ? (`${process.env.HOST}:${process.env.PORT}/static/avatars/` + request.file.filename) : null;
 
   return response.status(200).json({ uri });
 };

@@ -105,6 +105,8 @@ export default function ChangeAvatarForm({ navigation }) {
       </View>
 
       <View style={commonStyles.formContainer}>
+        <Text style={styles.helpText}>Select a JPEG, JPG or PNG file:</Text>
+
         <View style={styles.actionContainer}>
           <View style={styles.avatarContainer}>
             { (avatar && avatar !== "") ? <Image

@@ -9,9 +9,9 @@ export default class Row extends React.PureComponent {
         <TouchableOpacity onPress={() => this.props.navigation.navigate("FriendDetails", {contactId: this.props.obj.id})}>
           <View style={styles.contact}>
             <View style={styles.thumbnail}>
-              { this.props.obj.picture  ? <Image
+              { this.props.obj.avatar  ? <Image
                                             style={styles.profilePicture}
-                                            source={{uri: this.props.obj.picture}}
+                                            source={{uri: this.props.obj.avatar}}
                                           />
                                         : <Image
                                             style={[styles.profilePicture, styles.thumbnail]}

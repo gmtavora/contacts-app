@@ -1,4 +1,5 @@
 const db = require("../../db");
+const bcrypt = require("bcrypt");
 
 module.exports = async (request, response) => {
   const {token, id, newPassword, oldPassword} = request.body;
@@ -13,7 +14,10 @@ module.exports = async (request, response) => {
 
     if ((!userInfo) || (storedToken !== token)) return response.status(403).send("Invalid credentials.");
 
-    await db.changePassword(id, oldPassword, newPassword);
+    const salt = await bcrypt.genSalt(10);
+    const hashedPassword = await bcrypt.hash(newPassword, salt);
+
+    await db.changePassword(id, oldPassword, hashedPassword);
   } catch (error) {
     console.log(error.message);
     return response.status(500).send("Internal server error.");

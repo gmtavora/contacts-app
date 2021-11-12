@@ -111,8 +111,8 @@ export const logInUser = (username, password) => async dispatch => {
 export const registerUser = (userInfo) => async dispatch => {
   dispatch({type: REGISTER_USER});
   try {
-    const userInfo = await registerNewUser(userInfo);
-    dispatch({type: LOG_IN_FULFILLED, payload: userInfo});
+    const data = await registerNewUser(userInfo);
+    dispatch({type: LOG_IN_FULFILLED, payload: data});
   } catch (error) {
     dispatch({type: REGISTRATION_REJECTED, payload: error.message});
   }
@@ -128,10 +128,10 @@ export const getFriendsList = (token, id) => async dispatch => {
   }
 };
 
-export const findUserByName = (token, word) => async dispatch => {
+export const findUserByName = (id, token, word) => async dispatch => {
   dispatch({type: REQUESTED_USER_SEARCH});
   try {
-    const result = await searchForUser(token, word);
+    const result = await searchForUser(id, token, word);
     dispatch({type: RECEIVED_USER_SEARCH, payload: result});
   } catch (error) {
     dispatch({type: USER_SEARCH_FAILED, payload: error.message});

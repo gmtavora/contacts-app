@@ -228,7 +228,7 @@ export default function ChangeInformationsForm({ navigation }) {
                               <ActivityIndicator size="small" color="#000" />
                             </View>
                           : <TouchableOpacity style={commonStyles.submitButton} onPress={handleSubmit}>
-                              <Text style={commonStyles.whiteText}>Enviar</Text>
+                              <Text style={commonStyles.whiteText}>Submit</Text>
                             </TouchableOpacity>
         }
       </KeyboardAvoidingScrollView>

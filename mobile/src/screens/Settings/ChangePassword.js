@@ -76,6 +76,7 @@ export default function ChangePasswordForm({ navigation }) {
           textContentType="password"
           value={oldPassword}
           onChangeText={setOldPassword}
+          secureTextEntry
         />
 
         <Text style={commonStyles.inputLabel}>New password</Text>
@@ -87,6 +88,7 @@ export default function ChangePasswordForm({ navigation }) {
           textContentType="password"
           value={newPassword}
           onChangeText={setNewPassword}
+          secureTextEntry
         />
 
         <Text style={commonStyles.inputLabel}>Repeat new password</Text>
@@ -98,13 +100,14 @@ export default function ChangePasswordForm({ navigation }) {
           textContentType="password"
           value={repeatNewPassword}
           onChangeText={setRepeatNewPassword}
+          secureTextEntry
         />
 
         { changeRequested ? <View style={[commonStyles.submitButton, commonStyles.disabledButton]}>
                               <ActivityIndicator size="small" color="#000" />
                             </View>
                           : <TouchableOpacity style={commonStyles.submitButton}>
-                              <Text style={commonStyles.whiteText}>Enviar</Text>
+                              <Text style={commonStyles.whiteText}>Submit</Text>
                             </TouchableOpacity>
         }
       </KeyboardAvoidingScrollView>

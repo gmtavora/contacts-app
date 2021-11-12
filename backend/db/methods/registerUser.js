@@ -1,6 +1,6 @@
-module.exports = function registerUser(username, password, name, phone, cell, email, address, city, state, country, birthday, company, nationality) { 
-  const sql = `INSERT INTO Users (username, password, name, phone, cell, email, address, city, state, country, birthday, company, nationality)
-               VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);`;
+module.exports = function registerUser(username, password, name, phone, email, company) { 
+  const sql = `INSERT INTO Users (username, password, name, phone, email, company)
+               VALUES (?, ?, ?, ?, ?, ?);`;
 
   return new Promise((resolve, reject) => {
     const usernameCheckCallback = (error, row) => {

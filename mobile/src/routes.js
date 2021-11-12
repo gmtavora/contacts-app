@@ -8,6 +8,7 @@ import { createStackNavigator } from '@react-navigation/stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 
 import Login from './screens/Login';
+import ForgotPassword from './screens/Login/ForgotPassword';
 import FriendsList from './screens/FriendsList';
 import AddFriend from './screens/AddFriend';
 import SearchFriend from './screens/SearchFriend';
@@ -95,10 +96,11 @@ export default function Routes() {
       <AppStack.Navigator screenOptions={{ headerShown: false }}>
         {
           (isLogged)
-            ? <AppStack.Screen name={"Main"} component={Main}/>
+            ? <AppStack.Screen name="Main" component={Main}/>
             : <>
-                <AppStack.Screen name={"Login"} component={Login} />
-                <AppStack.Screen name={"SignUp"} component={SignUp} />
+                <AppStack.Screen name="Login" component={Login} />
+                <AppStack.Screen name="ForgotPassword" component={ForgotPassword} />
+                <AppStack.Screen name="SignUp" component={SignUp} />
               </>
         }
       </AppStack.Navigator>

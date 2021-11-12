@@ -1,5 +1,5 @@
-module.exports = function searchUserByName(word) {
-  const sql = `SELECT * FROM Users WHERE name LIKE ?`;
+module.exports = function searchUserByName(id, word) {
+  const sql = `SELECT * FROM Users WHERE name LIKE ? AND id != ?`;
   word = word + "%";
 
   return new Promise((resolve, reject) => {
@@ -9,6 +9,6 @@ module.exports = function searchUserByName(word) {
       resolve(rows);
     }
 
-    this.db.all(sql, [word], callback);
+    this.db.all(sql, [word, id], callback);
   });
 };

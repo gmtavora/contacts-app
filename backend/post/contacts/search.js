@@ -11,7 +11,7 @@ module.exports = async (request, response) => {
     const storedToken = await db.getToken(id);
     if (token !== storedToken) return response.status(403).send("Invalid credentials.");
     
-    results = await db.searchUserByName(word);
+    results = await db.searchUserByName(id, word);
   } catch (error) {
     console.log(error.message);
     return request.status(500).send("Internal server error.");

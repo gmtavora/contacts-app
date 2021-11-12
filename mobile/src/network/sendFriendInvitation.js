@@ -1,7 +1,7 @@
-import { host } from './constants';
+import { HOST, PORT } from '@env';
 
 export default async function sendFriendInvitation(token, requester, requested) {
-  const response = await fetch(`${host}/request/send`, {
+  const response = await fetch(`${HOST}:${PORT}/request/send`, {
     method: "POST",
     headers: {"content-type": "application/json"},
     body: JSON.stringify({token, requester, requested})

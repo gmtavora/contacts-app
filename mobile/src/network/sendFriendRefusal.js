@@ -1,7 +1,7 @@
-import { host } from './constants';
+import { HOST, PORT } from '@env';
 
 export default async function sendFriendRefusal(token, requested, id) {
-  const response = await fetch(`${host}/request/refuse`, {
+  const response = await fetch(`${HOST}:${PORT}/request/refuse`, {
     method: "POST",
     headers: {"content-type": "application/json"},
     body: JSON.stringify({token, requested, id})

@@ -1,4 +1,4 @@
-import { host } from './constants';
+import { HOST, PORT } from '@env';
 import axios from 'axios';
 
 export default async function updateAvatar(id, token, data) {
@@ -6,12 +6,12 @@ export default async function updateAvatar(id, token, data) {
     headers: {
       id,
       token,
-      'content-type': `multipart/form-data; boundary=${data._boundary}`
+      'content-type': `multipart/form-data`
     }
   }
 
   try {
-    const response = await axios.post(`${host}/user/changeAvatar`, data, config);
+    const response = await axios.post(`${HOST}:${PORT}/user/changeAvatar`, data, config);
     return response;
   } catch (error) {
     throw new Error(error.message);

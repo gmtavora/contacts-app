@@ -1,3 +1,5 @@
+if (process.env.NODE_ENV !== 'production') require("dotenv").config();
+
 const express = require('express');
 const multer = require('multer');
 const path = require('path');
@@ -47,6 +49,7 @@ const multerConfig = {
     if (allowedMimes.includes(file.mimetype)) {
       cb(null, true)
     } else {
+      console.log(file);
       cb(new Error('Invalid file type'));
     }
   }

@@ -7,6 +7,8 @@ module.exports = async (request, response) => {
   if (!token) return response.status(403).send("You are not logged in.");
   if (!id) return response.status(400).send("Invalid request.");
 
+  let parsedBirthday = birthday ? `${birthday.substring(6, 10)}-${birthday.substring(3, 5)}-${birthday.substring(0, 2)}` : null;
+
   try {
     const userInfo = await db.searchUserById(id);
     const storedToken = await db.getToken(id);
@@ -21,7 +23,7 @@ module.exports = async (request, response) => {
     if ((city !== userInfo.city) && city) {await db.updateInformation(id, "city", city); userInfo.city = city;}
     if ((state !== userInfo.state) && state) {await db.updateInformation(id, "state", state); userInfo.state = state;}
     if ((country !== userInfo.country) && country) {await db.updateInformation(id, "country", country); userInfo.country = country;}
-    if ((birthday !== userInfo.birthday) && birthday) {await db.updateInformation(id, "birthday", birthday); userInfo.birthday = birthday}
+    if ((parsedBirthday !== userInfo.birthday) && birthday) {await db.updateInformation(id, "birthday", birthday); userInfo.birthday = birthday}
     if ((company !== userInfo.company) && company) {await db.updateInformation(id, "company", company); userInfo.company = company;}
     if ((nationality !== userInfo.nationality) && nationality) {await db.updateInformation(id, "nationality", nationality); userInfo.nationality = nationality;}
 

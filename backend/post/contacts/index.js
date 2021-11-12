@@ -12,6 +12,12 @@ module.exports = async (request, response) => {
     if (storedToken !== token) return response.status(403).send("Invalid credentials");
     
     contactsList = await db.getFriendsList(id);
+    contactsList = contactsList.map((e) => (
+      {
+        ...e,
+        avatar: e.avatar ? e.avatar = `${process.env.HOST}:${process.env.PORT}/static/avatars/${e.avatar}` : null
+      }
+    ));
   } catch (error) {
     console.log(error.message);
     return response.status(500).send("Internal server error.");

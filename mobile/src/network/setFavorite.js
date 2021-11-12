@@ -1,7 +1,7 @@
-import { host } from './constants';
+import { HOST, PORT } from '@env';
 
 export default async function setFavorite(token, id, favorite) {
-  const response = await fetch(`${host}/favorites/add`, {
+  const response = await fetch(`${HOST}:${PORT}/favorites/add`, {
     method: "POST",
     headers: {"content-type": "application/json"},
     body: JSON.stringify({token, id, favorite})
