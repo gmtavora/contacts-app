@@ -10,10 +10,15 @@ export default class Row extends React.PureComponent {
       return (
         <TouchableOpacity style={styles.contact} onPress={() => this.props.navigation.navigate("UserDetails", {contactInfo: this.props.obj})}>
           <View style={styles.thumbnail}>
-            <Image
-              style={styles.profilePicture}
-              source={{uri: this.props.obj.picture}}
-            />
+            { this.props.obj.avatar ? <Image
+                                        style={styles.profilePicture}
+                                        source={{uri: this.props.obj.avatar}}
+                                      />
+                                    : <Image
+                                        style={styles.profilePicture}
+                                        source={require("../../../assets/anonymous-avatar-icon-25.jpg")}
+                                      />
+            }
           </View>
           <View style={styles.contactInfo}>
             <Text style={styles.contactName}>{this.props.obj.name}</Text>

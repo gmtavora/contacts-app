@@ -2,7 +2,9 @@ import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { SafeAreaView, Text, TextInput, TouchableOpacity, Alert, View, ActivityIndicator } from 'react-native';
 import { KeyboardAvoidingScrollView } from 'react-native-keyboard-avoiding-scroll-view';
+import { Formik } from 'formik';
 import { TextInputMask } from 'react-native-masked-text';
+import * as yup from 'yup';
 
 import { registerUser, clearError } from '../../../redux/actions';
 
@@ -14,14 +16,17 @@ export default function AddContactForm({ navigation }) {
   const token = useSelector(state => state.user.token);
   const error = useSelector(state => state.user.error);
 
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
-  const [repeatPassword, setRepeatPassword] = useState("");
-  const [name, setName] = useState("");
-  const [phone, setPhone] = useState("");
-  const [email, setEmail] = useState("");
-  const [company, setCompany] = useState("");
   const [signUpRequested, setSignUpRequested] = useState(false);
+
+  const schema = yup.object().shape({
+    username: yup.string().required("Please inform an username.").min(4, "Your username should be at least 4 characters long."),
+    password: yup.string().required("Please inform a password.").min(8, "Your password should be at least 8 characters long."),
+    repeatPassword: yup.string().required("Please repeat your password.").test("passwords-match", "Passwords don't match.", function (value) {return this.parent.password === value}),
+    name: yup.string().required("Please inform your name."),
+    phone: yup.string().required("Please inform your phone.").min(14, "Invalid phone."),
+    email: yup.string().email("Invalid email").required("Please inform your email."),
+    company: yup.string().required("Please inform your company.")
+  });
 
   useEffect(() => {
     if (token) navigation.navigate("Main");
@@ -35,23 +40,7 @@ export default function AddContactForm({ navigation }) {
     }
   }, [error]);
 
-  async function handleSubmit() {
-    if (!username) return Alert.alert(windowTitle, "Please inform an username.");
-    if (!password) return Alert.alert(windowTitle, "Please inform a password.");
-    if (!repeatPassword) return Alert.alert(windowTitle, "Please repeat your password.");
-    if (!name) return Alert.alert(windowTitle, "Please inform your name.");
-    if (!phone) return Alert.alert(windowTitle, "Please inform your phone number.");
-    if (!email) return Alert.alert(windowTitle, "Please inform your email.");
-    
-    if (username.length < 4) return Alert.alert(windowTitle, "Your username should be at least 4 characters long.");
-    if (password.length < 8) return Alert.alert(windowTitle, "Your password should be at least 8 characters long");
-    if (name.length < 4) return Alert.alert(windowTitle, "Your name should be at least 4 characters long");
-    if (phone.length < 11) return Alert.alert(windowTitle, "Your phone number should be at least 11 characters long");
-    if (email.length < 7) return Alert.alert(windowTitle, "Invalid email format");
-    if (!email.includes("@")) return Alert.alert(windowTitle, "Invalid email format");
-
-    if (password !== repeatPassword) return Alert.alert(windowTitle, "Passwords don't match.");
-
+  async function submitForm({ username, password, name, phone, email, company }) {
     const data = {
       username,
       password,
@@ -68,98 +57,138 @@ export default function AddContactForm({ navigation }) {
   return (
     <SafeAreaView style={commonStyles.formContainer}>
       <KeyboardAvoidingScrollView style={commonStyles.scrollView}>
-        <Text style={commonStyles.inputLabel}>Username</Text>
-        <TextInput
-          style={commonStyles.input}
-          autoCapitalize="none"
-          autoCompleteType="username"
-          maxLength={32}
-          textContentType="username"
-          value={username}
-          onChangeText={setUsername}
-          autoFocus
-        />
-
-        <Text style={commonStyles.inputLabel}>Password</Text>
-        <TextInput
-          style={commonStyles.input}
-          autoCapitalize="none"
-          autoCompleteType="password"
-          maxLength={32}
-          textContentType="password"
-          value={password}
-          onChangeText={setPassword}
-          secureTextEntry
-        />
-
-        <Text style={commonStyles.inputLabel}>Repeat Password</Text>
-        <TextInput
-          style={commonStyles.input}
-          autoCapitalize="none"
-          autoCompleteType="password"
-          maxLength={32}
-          textContentType="password"
-          value={repeatPassword}
-          onChangeText={setRepeatPassword}
-          secureTextEntry
-        />
-
-        <Text style={commonStyles.inputLabel}>Name</Text>
-        <TextInput
-          style={commonStyles.input}
-          autoCapitalize="words"
-          autoCompleteType="name"
-          maxLength={32}
-          textContentType="name"
-          value={name}
-          onChangeText={setName}
-        />
-
-        <Text style={commonStyles.inputLabel}>Phone</Text>
-        <TextInputMask
-          type="cel-phone"
-          options={{
-            maskType: "BRL",
-            withDDD: true,
-            dddMask: "(99) "
+        <Formik
+          initialValues={{
+            username: "",
+            password: "",
+            repeatPassword: "",
+            name: "",
+            phone: "",
+            email: "",
+            company: ""
           }}
-          value={phone}
-          onChangeText={setPhone}
-          style={commonStyles.input}
-          autoCompleteType="tel"
-          maxLength={17}
-          keyboardType="numeric"
-          textContentType="telephoneNumber"
-        />
+          onSubmit={submitForm}
+          validationSchema={schema}
+        >
+          {({ handleChange, handleBlur, handleSubmit, values, errors, touched }) => (
+            <View>
+              <Text style={commonStyles.inputLabel}>Username</Text>
+              <TextInput
+                style={commonStyles.input}
+                autoCapitalize="none"
+                autoCompleteType="username"
+                maxLength={32}
+                textContentType="username"
+                value={values.username}
+                onChangeText={handleChange("username")}
+                autoFocus
+              />
+              { errors.username && touched.username ? <Text style={commonStyles.inputError}>{errors.username}</Text>
+                                                    : null
+              }
 
-        <Text style={commonStyles.inputLabel}>Email</Text>
-        <TextInput
-          style={commonStyles.input}
-          autoCompleteType="email"
-          maxLength={32}
-          keyboardType="email-address"
-          textContentType="emailAddress"
-          value={email}
-          onChangeText={setEmail}
-        />
+              <Text style={commonStyles.inputLabel}>Password</Text>
+              <TextInput
+                style={commonStyles.input}
+                autoCapitalize="none"
+                autoCompleteType="password"
+                maxLength={32}
+                textContentType="password"
+                value={values.password}
+                onChangeText={handleChange("password")}
+                secureTextEntry
+              />
+              { errors.password && touched.password ? <Text style={commonStyles.inputError}>{errors.password}</Text>
+                                                    : null
+              }
 
-        <Text style={commonStyles.inputLabel}>Company</Text>
-        <TextInput
-          style={commonStyles.input}
-          autoCapitalize="words"
-          maxLength={32}
-          textContentType="organizationName"
-          value={company}
-          onChangeText={setCompany}
-        />
+              <Text style={commonStyles.inputLabel}>Repeat Password</Text>
+              <TextInput
+                style={commonStyles.input}
+                autoCapitalize="none"
+                autoCompleteType="password"
+                maxLength={32}
+                textContentType="password"
+                value={values.repeatPassword}
+                onChangeText={handleChange("repeatPassword")}
+                secureTextEntry
+              />
+              { errors.repeatPassword && touched.repeatPassword ? <Text style={commonStyles.inputError}>{errors.repeatPassword}</Text>
+                                                                : null
+              }
 
-        { signUpRequested ? <View style={[commonStyles.submitButton, commonStyles.disabledButton]}>
-                              <ActivityIndicator size="small" color="#000" />
-                            </View>
-                          : <TouchableOpacity style={commonStyles.submitButton} onPress={handleSubmit}>
-                              <Text style={commonStyles.whiteText}>Enviar</Text>
-                            </TouchableOpacity>
-        }
+              <Text style={commonStyles.inputLabel}>Name</Text>
+              <TextInput
+                style={commonStyles.input}
+                autoCapitalize="words"
+                autoCompleteType="name"
+                maxLength={32}
+                textContentType="name"
+                value={values.name}
+                onChangeText={handleChange("name")}
+              />
+              { errors.name && touched.name ? <Text style={commonStyles.inputError}>{errors.name}</Text>
+                                            : null
+              }
+
+              <Text style={commonStyles.inputLabel}>Phone</Text>
+              <TextInputMask
+                type="cel-phone"
+                options={{
+                  maskType: "BRL",
+                  withDDD: true,
+                  dddMask: "(99) "
+                }}
+                value={values.phone}
+                onChangeText={handleChange("phone")}
+                style={commonStyles.input}
+                autoCompleteType="tel"
+                maxLength={17}
+                keyboardType="numeric"
+                textContentType="telephoneNumber"
+              />
+              { errors.phone && touched.phone ? <Text style={commonStyles.inputError}>{errors.phone}</Text>
+                                              : null
+              }
+
+              <Text style={commonStyles.inputLabel}>Email</Text>
+              <TextInput
+                style={commonStyles.input}
+                autoCapitalize="none"
+                autoCompleteType="email"
+                maxLength={32}
+                keyboardType="email-address"
+                textContentType="emailAddress"
+                value={values.email}
+                onChangeText={handleChange("email")}
+              />
+              { errors.email && touched.email ? <Text style={commonStyles.inputError}>{errors.email}</Text>
+                                              : null
+              }
+
+              <Text style={commonStyles.inputLabel}>Company</Text>
+              <TextInput
+                style={commonStyles.input}
+                autoCapitalize="words"
+                maxLength={32}
+                textContentType="organizationName"
+                value={values.company}
+                onChangeText={handleChange("company")}
+              />
+              { errors.company && touched.company ? <Text style={commonStyles.inputError}>{errors.company}</Text>
+                                                  : null
+              }
+
+              { signUpRequested ? <View style={[commonStyles.submitButton, commonStyles.disabledButton]}>
+                                    <ActivityIndicator size="small" color="#000" />
+                                  </View>
+                                : <TouchableOpacity style={commonStyles.submitButton} onPress={handleSubmit}>
+                                    <Text style={commonStyles.whiteText}>Submit</Text>
+                                  </TouchableOpacity>
+              }
+            </View>
+          )}
+        </Formik>
       </KeyboardAvoidingScrollView>
     </SafeAreaView>
   );

@@ -1,8 +1,10 @@
 # Overview
 
-This is a simple contacts mobile application, which I developed to learn more about React Native and NodeJS.
+A full stack application that keeps all your contacts up to date. ContactsApp acts like a social network,
+where you mantain your current phone, email and company, and share them with your colleagues and
+friends.
 
-This application was developed for educational purposes and should not be used due to security breaches.
+This application was developed for educational purposes.
 
 ## Screens
 ![Screen 1](https://github.com/gmtavora/contacts-app/blob/master/screens/screen1.jpg)
@@ -11,34 +13,48 @@ This application was developed for educational purposes and should not be used d
 
 ## Prerequisites
 
-You'll need a package manager, Expo and NodeJS.
+You'll need Expo and NodeJS installed.
 
 ## Getting started
 
 1. Clone the repository ```git clone https://github.com/gmtavora/contacts-app/```
-2. In ```mobile```, install the needed packages using your package manager.
-3. In the backend folder, you may need to fill the database with some fake contacts using ```node fillDatabase.js```
-4. Run the server ```node index.js```
-5. Run the application using Expo or your preferred simulator.
+2. In ```mobile```, install the needed packages using ```npm install```.
+3. Create a .env file in the ```backend``` folder. Use the following lines:
+    ```
+    NODE_ENV=development
 
-## Tests
+    HOST=http://yourip.com
+    PORT=8000
 
-Not yet supported.
+    EMAIL_HOST=host
+    EMAIL_USERNAME=user
+    EMAIL_PASSWORD=password
+    EMAIL_PASSWORD_RESET=reset@mail.com
+    ```
+
+4. Create a .env file in the ```mobile``` folder. Use the following line:
+    ```
+    HOST=http://yourip.com
+    PORT=8000
+    ```
+
+5. Run the server ```node index.js```
+6. Run the application using Expo or your preferred simulator.
+
+Optional: in the backend folder, you'd may like to use the mock database and mock uploads. If that's your case, rename ```mockDatabase.db``` as ```database.db```, and also unzip ```mockUploads.zip``` and rename it to ```uploads```.
 
 ## Built with
 
-* [React Native](https://reactnative.dev/) - Simplifies cross-platform support;
-* [Expo](https://expo.io/) - Facilitates native testing;
-* [NodeJS](http://nodejs.org/) - Back-end;
-* [Express](https://expressjs.com/) - Web framework for Node;
-* [SQLite](https://www.sqlite.org/) - SQL database engine;
+* [React Native](https://reactnative.dev/)
+* [Expo](https://expo.io/)
+* [NodeJS](http://nodejs.org/)
+* [Express](https://expressjs.com/)
+* [SQLite](https://www.sqlite.org/)
+* [Formik](https://formik.org/)
+* [Yup](https://github.com/jquense/yup)
+* [Multer](https://github.com/expressjs/multer)
+* [Axios](https://axios-http.com/docs/intro)
 
 ## Authors
 
 * **Gabriel Távora**
-
-## Issues
-
-* Currently using HTTP.
-* Need to improve data storage in the database (security issues).
-* Must allow the user to block another user.

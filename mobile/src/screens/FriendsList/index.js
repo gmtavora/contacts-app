@@ -24,6 +24,7 @@ export default function ContactsList({ navigation }) {
   const token = useSelector(state => state.user.token);
   const id = useSelector(state => state.user.id);
   const contacts = useSelector(state => state.contacts);
+  const contactCount = useSelector(state => state.user.contactCount);
   const requestsList = useSelector(state => state.requests.list);
   const error = useSelector(state => state.user.error);
   const requestsError = useSelector(state => state.requests.error);
@@ -47,7 +48,7 @@ export default function ContactsList({ navigation }) {
   }, [navigation]);
 
   useEffect(() => {
-    if (contacts) setContactsLoaded(true);
+    if (contactCount > -1) setContactsLoaded(true);
   }, [contacts]);
 
   useEffect(() => {
@@ -65,7 +66,7 @@ export default function ContactsList({ navigation }) {
     return (
       <View style={commonStyles.container}>
         <TouchableOpacity style={styles.centralize} onPress={requestFriendsList}>
-          <MaterialIcons name={"error"} size={40} style={styles.errorIcon} />
+          <MaterialIcons name="error" size={40} style={styles.errorIcon} />
           <Text>{error}</Text>
           <Text>Press to refresh.</Text>
         </TouchableOpacity>
@@ -77,43 +78,6 @@ export default function ContactsList({ navigation }) {
     return (
       <View style={commonStyles.container}>
         <ActivityIndicator size="small" color="#0000ff" />
-      </View>
-    );
-  }
-
-  if (contactsLoaded && contacts.length === 0) {
-    return (
-      <View style={commonStyles.container}>
-        <View style={commonStyles.titleContainer}>
-          <Text style={commonStyles.title}>Contacts</Text>
-          <TouchableOpacity onPress={() => navigation.navigate("SearchFriend")}>
-            <MaterialIcons name={"search"} size={40} color={blue} />
-          </TouchableOpacity>
-        </View>
-    
-        <View style={styles.selectorContainer}>
-          <TouchableOpacity style={styles.touchable} onPress={() => {setCategory(0);}}>
-            <View style={!category && styles.touchableActive}>
-              <Text style={[styles.touchableText, !category && styles.touchableTextActive]}>All</Text>
-            </View>
-          </TouchableOpacity>
-    
-          <TouchableOpacity style={styles.touchable} onPress={() => {setCategory(1);}}>
-            <View style={category && styles.touchableActive}>
-              <Text style={[styles.touchableText, category && styles.touchableTextActive]}>Favorites</Text>
-            </View>
-          </TouchableOpacity>
-        </View>
-        
-        <View style={[styles.contactsContainer, styles.centralize]}>
-          <Text>You have no contacts yet.</Text>
-        </View>
-
-        <TouchableOpacity style={styles.addContactButton} onPress={() => navigation.navigate("AddFriend")}>
-          <View style={styles.addContactButtonIcon}>
-            <MaterialIcons name="add" size={32} color="#FFF" />
-          </View>
-        </TouchableOpacity>
       </View>
     );
   }
@@ -141,14 +105,18 @@ export default function ContactsList({ navigation }) {
         </TouchableOpacity>
       </View>
     
-      <View style={styles.contactsContainer}>
-        <SectionList
-          sections={contacts}
-          renderItem={({ item }) => <Row obj={item} category={category} navigation={navigation} />}
-          renderSectionHeader={({ section }) => renderSection(section, category, width)}
-          keyExtractor={item => item.id.toString()}
-        />
-      </View>
+      {(contactsLoaded && contacts.length === 0)  ? <View style={[styles.contactsContainer, styles.centralize]}>
+                                                      <Text>You have no contacts yet.</Text>
+                                                    </View>
+                                                  : <View style={styles.contactsContainer}>
+                                                      <SectionList
+                                                        sections={contacts}
+                                                        renderItem={({ item }) => <Row obj={item} category={category} navigation={navigation} />}
+                                                        renderSectionHeader={({ section }) => renderSection(section, category, width)}
+                                                        keyExtractor={item => item.id.toString()}
+                                                      />
+                                                    </View>
+      }
     
       <TouchableOpacity style={styles.addContactButton} onPress={() => navigation.navigate("AddFriend")}>
         <View style={styles.addContactButtonIcon}>

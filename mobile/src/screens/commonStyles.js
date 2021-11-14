@@ -41,6 +41,11 @@ export default StyleSheet.create({
     fontWeight: "bold",
     marginBottom: 10
   },
+  inputError: {
+    fontSize: 12,
+    color: "red",
+    marginBottom: 10
+  },
   submitButton: {
     width: "100%",
     height: 48,

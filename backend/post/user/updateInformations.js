@@ -27,7 +27,7 @@ module.exports = async (request, response) => {
     if ((company !== userInfo.company) && company) {await db.updateInformation(id, "company", company); userInfo.company = company;}
     if ((nationality !== userInfo.nationality) && nationality) {await db.updateInformation(id, "nationality", nationality); userInfo.nationality = nationality;}
 
-    return response.status(200).send(userInfo);
+    return response.status(200).send({...userInfo, password: null});
   } catch(error) {
     console.log(error.message);
     return response.status(500).send("Internal server error.");

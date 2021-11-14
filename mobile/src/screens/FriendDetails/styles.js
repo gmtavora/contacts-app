@@ -22,13 +22,16 @@ export default StyleSheet.create({
   },
   thumbnail: {
     flex: 5,
-    width: 96,
-    height: 96,
     marginTop: 30,
     marginBottom: 20,
-    borderRadius: 48,
     borderColor: "#FFF",
     borderWidth: 2
+  },
+  profilePicture: {
+    aspectRatio: 1,
+    width: 96,
+    height: 96,
+    borderRadius: 48
   },
   identityContainer: {
     flex: 1,

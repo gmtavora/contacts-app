@@ -1,4 +1,4 @@
-module.exports = function changePassword(id, oldPassword, newPassword) {
+module.exports = function changePassword(id, newPassword) {
   const sqlCheckPassword = `SELECT password FROM Users WHERE id = ?`;
   const sqlChangePassword = `UPDATE Users
                              SET password = ?
@@ -9,8 +9,6 @@ module.exports = function changePassword(id, oldPassword, newPassword) {
       if (error) return reject(new Error("Internal server error."));
 
       if (!row) return reject(new Error("No such user."));
-
-      if (row.password !== oldPassword) return reject(new Error("Incorrect password."));
     }
 
     function changeCallback(error) {

@@ -8,16 +8,19 @@ module.exports = async (request, response) => {
     return response.status(400).send("Invalid request.");
 
   try {
-    const userSearch = await db.searchUserById(id);
-    const userInfo = userSearch[0];
-    const storedToken = await db.getToken(id);
+    const userInfo = await db.searchUserById(id);
+    if (!userInfo) return response.status(403).send("Invalid credentials");
 
-    if ((!userInfo) || (storedToken !== token)) return response.status(403).send("Invalid credentials.");
+    const storedToken = await db.getToken(id);
+    if (storedToken !== token) return response.status(403).send("Invalid credentials");
+
+    const passwordAuthentication = await bcrypt.compare(oldPassword, userInfo.password);
+    if (!passwordAuthentication) return response.status(403).send("Incorrect password");
 
     const salt = await bcrypt.genSalt(10);
     const hashedPassword = await bcrypt.hash(newPassword, salt);
 
-    await db.changePassword(id, oldPassword, hashedPassword);
+    await db.changePassword(id, hashedPassword);
   } catch (error) {
     console.log(error.message);
     return response.status(500).send("Internal server error.");

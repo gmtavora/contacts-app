@@ -19,7 +19,7 @@ module.exports = async (request, response) => {
 
     delete userInfo.password;
 
-    return response.json({token: token, ...userInfo, avatar: "http://192.168.1.68:8000/static/avatars/" + userInfo.avatar});
+    return response.json({token: token, ...userInfo, avatar: userInfo.avatar ? "http://192.168.1.68:8000/static/avatars/" + userInfo.avatar : null});
   } catch (error) {
     console.log(error.message);
     return response.status(500).send("Internal server error.");

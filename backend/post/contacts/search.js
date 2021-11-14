@@ -12,6 +12,11 @@ module.exports = async (request, response) => {
     if (token !== storedToken) return response.status(403).send("Invalid credentials.");
     
     results = await db.searchUserByName(id, word);
+
+    results = results.map((e) => ({
+      ...e,
+      avatar: e.avatar ? `${process.env.HOST}:${process.env.PORT}/static/avatars/${e.avatar}` : null
+    }));
   } catch (error) {
     console.log(error.message);
     return request.status(500).send("Internal server error.");

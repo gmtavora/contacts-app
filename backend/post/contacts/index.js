@@ -15,7 +15,7 @@ module.exports = async (request, response) => {
     contactsList = contactsList.map((e) => (
       {
         ...e,
-        avatar: e.avatar ? e.avatar = `${process.env.HOST}:${process.env.PORT}/static/avatars/${e.avatar}` : null
+        avatar: e.avatar ? `${process.env.HOST}:${process.env.PORT}/static/avatars/${e.avatar}` : null
       }
     ));
   } catch (error) {

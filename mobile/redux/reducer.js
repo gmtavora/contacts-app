@@ -42,7 +42,7 @@ import {
   CLEAR_PASSWORD_RESPONSE
 } from './actions';
 
-const userReducer = (state = {}, action) => {
+const userReducer = (state = {contactCount: -1}, action) => {
   switch (action.type) {
     case UPDATE_USER:
       return {...state, ...action.payload};
@@ -80,6 +80,8 @@ const userReducer = (state = {}, action) => {
       return {...state, error: action.payload};
     case CLEAR_PASSWORD_RESPONSE:
       return {...state, passwordResponse: undefined};
+    case RECEIVED_FRIENDS_LIST:
+      return {...state, contactCount: action.payload.length}
     default:
       return state;
   }

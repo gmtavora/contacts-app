@@ -6,7 +6,7 @@ module.exports = async (request, response) => {
 
   if (!token || !id) return response.status(403).send("You are not logged in.");
 
-  const avatar = request.file.filename ? request.file.filename : null;
+  const avatar = request.file ? request.file.filename : null;
 
   try {
     const userInfo = await db.searchUserById(id);
@@ -20,7 +20,7 @@ module.exports = async (request, response) => {
     return response.status(500).send("Internal server error.");
   }
 
-  const uri = request.file.filename ? (`${process.env.HOST}:${process.env.PORT}/static/avatars/` + request.file.filename) : null;
+  const uri = request.file ? (`${process.env.HOST}:${process.env.PORT}/static/avatars/` + request.file.filename) : null;
 
   return response.status(200).json({ uri });
 };

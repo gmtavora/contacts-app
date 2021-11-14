@@ -8,12 +8,21 @@ export default async function updateAvatar(id, token, data) {
       token,
       'content-type': `multipart/form-data`
     }
+  };
+
+  if (data) {
+    try {
+      const response = await axios.post(`${HOST}:${PORT}/user/changeAvatar`, data, config);
+      return response;
+    } catch (error) {
+      throw new Error(error.message);
+    }
   }
 
   try {
-    const response = await axios.post(`${HOST}:${PORT}/user/changeAvatar`, data, config);
+    const response = await axios.post(`${HOST}:${PORT}/user/clearAvatar`, null, {...config, 'content-type': 'application/json'});
     return response;
-  } catch (error) {
+  } catch(error) {
     throw new Error(error.message);
   }
 }

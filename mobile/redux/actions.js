@@ -222,7 +222,7 @@ export const changePassword = (data) => async dispatch => {
   dispatch({type: CHANGE_PASSWORD});
   try {
     const response = await changeUserPassword(data);
-    dispatch({type: PASSWORD_CHANGED, payload: response.data});
+    dispatch({type: PASSWORD_CHANGED, payload: response});
   } catch (error) {
     dispatch({type: PASSWORD_CHANGE_ERROR, payload: error.message})
   }

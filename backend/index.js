@@ -42,6 +42,7 @@ const multerConfig = {
   fileFilter: (req, file, cb) => {
     const allowedMimes = [
       'image/jpeg',
+      'image/jpg',
       'image/pjpeg',
       'image/png'
     ];
@@ -49,7 +50,6 @@ const multerConfig = {
     if (allowedMimes.includes(file.mimetype)) {
       cb(null, true)
     } else {
-      console.log(file);
       cb(new Error('Invalid file type'));
     }
   }
@@ -69,6 +69,7 @@ app.post("/login", login);
 app.post("/logout", logout);
 app.post("/signup", signup);
 app.post("/user/changeAvatar", multer(multerConfig).single('avatar'), changeAvatar);
+app.post("/user/clearAvatar", changeAvatar);
 app.post("/user/updateInformations", updateInformations);
 app.post("/user/changePassword", changePassword);
 app.post("/contacts", contacts);

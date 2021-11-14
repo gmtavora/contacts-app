@@ -45,7 +45,6 @@ export default StyleSheet.create({
     justifyContent: "center"
   },
   thumbnail: {
-    flex: 0.8,
     height: 64,
     width: 64,
     marginRight: 20

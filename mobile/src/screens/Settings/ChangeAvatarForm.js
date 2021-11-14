@@ -88,7 +88,7 @@ export default function ChangeAvatarForm({ navigation }) {
     Alert.alert(windowTitle, "Do you want to delete your avatar?", [{
       text: "Yes",
       onPress: () => {
-        dispatch(changeAvatar(id, token, {}));
+        dispatch(changeAvatar(id, token, null));
         setSubmitted(true);
       }
     }, {
@@ -109,19 +109,19 @@ export default function ChangeAvatarForm({ navigation }) {
 
         <View style={styles.actionContainer}>
           <View style={styles.avatarContainer}>
-            { (avatar && avatar !== "") ? <Image
-                                            style={styles.thumbnail}
-                                            source={{ uri: avatar.uri }}
-                                          />
-                                        : (currentAvatar  ? <Image
-                                                              style={styles.thumbnail}
-                                                              source={{ uri: currentAvatar }}
-                                                            />
-                                                          : <Image
-                                                              style={styles.thumbnail}
-                                                              source={require("../../../assets/anonymous-avatar-icon-25.jpg")}
-                                                            />
-                                          )
+            { (avatar)  ? <Image
+                            style={styles.thumbnail}
+                            source={{ uri: avatar.uri }}
+                          />
+                        : (currentAvatar  ? <Image
+                                              style={styles.thumbnail}
+                                              source={{ uri: currentAvatar }}
+                                            />
+                                          : <Image
+                                              style={styles.thumbnail}
+                                              source={require("../../../assets/anonymous-avatar-icon-25.jpg")}
+                                            />
+                          )
             }
           </View>
 

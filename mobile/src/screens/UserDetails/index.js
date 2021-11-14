@@ -75,6 +75,7 @@ export default function ContactDetails({ route, navigation }) {
   useEffect(() => {
     if (requestRegistered) {
       Alert.alert("Add contact", "Request registered");
+      setAlreadyRequested(true);
       dispatch(clearRequest());
     }
   }, [requestRegistered]);
@@ -93,10 +94,15 @@ export default function ContactDetails({ route, navigation }) {
         <View style={styles.container}>
           <View style={styles.identityContainer}>
             <View style={styles.thumbnail}>
-              <Image
-                style={{aspectRatio: 1, borderRadius: 48}}
-                source={{uri: contactInfo.picture}}
-              />
+              { contactInfo.avatar ?  <Image
+                                        style={styles.profilePicture}
+                                        source={{uri: contactInfo.avatar}}
+                                      />
+                                    : <Image
+                                        style={styles.profilePicture}
+                                        source={require("../../../assets/anonymous-avatar-icon-25.jpg")}
+                                      />
+              }
             </View>
             <Text style={styles.name}>{contactInfo.name}</Text>
             <Text style={styles.company}>{contactInfo.company}</Text>
