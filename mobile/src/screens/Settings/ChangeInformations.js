@@ -36,15 +36,15 @@ export default function ChangeInformationsForm({ navigation }) {
   const schema = yup.object().shape({
     name: yup.string().required("Please inform your name.").min(4, "Your name should be at least 4 characters long."),
     phone: yup.string().required("Please inform your phone.").min(14, "Invalid phone."),
-    cell: yup.string().required("Please inform your cellphone.").min(14, "Invalid cellphone."),
+    cell: yup.string().nullable().min(14, "Invalid cellphone."),
     email: yup.string().email("Invalid email").required("Please inform your email."),
-    address: yup.string(),
-    city: yup.string(),
-    state: yup.string(),
-    country: yup.string(),
-    birthday: yup.string().min(10, "Invalid date."),
+    address: yup.string().nullable(),
+    city: yup.string().nullable(),
+    state: yup.string().nullable(),
+    country: yup.string().nullable(),
+    birthday: yup.string().nullable().min(10, "Invalid date."),
     company: yup.string().required("Please inform your company."),
-    nationality: yup.string()
+    nationality: yup.string().nullable()
   });
 
   useEffect(() => {
